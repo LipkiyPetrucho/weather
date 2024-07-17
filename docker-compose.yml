@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./weather:/weather
+    environment:
+      - DEBUG=1
+      - SECRET_KEY=your_secret_key
+      - ALLOWED_HOSTS=*
