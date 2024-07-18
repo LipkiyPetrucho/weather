@@ -13,14 +13,14 @@ SECRET_KEY = 'django-insecure-e4m^%qzamly*^jjw&f-^g6s-%!_(i$=i)nf)5zxyu%rm6$z)2d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '0.0.0.0', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     # my apps
-    'weather.apps.AccountConfig',
+    'weather.apps.WeatherConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # packages install
-    'rest_framework'
+    'rest_framework',
     'rest_framework_simplejwt',
 ]
 

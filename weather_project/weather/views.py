@@ -7,8 +7,7 @@ from .models import CitySearchHistory
 
 
 def get_weather_data(city):
-    api_url = f'https://api.open-meteo.com/v1/forecast?city={
-        city}&hourly=temperature_2m'
+    api_url = f'https://api.open-meteo.com/v1/forecast?city={city}&hourly=temperature_2m'
     response = requests.get(api_url)
     return response.json()
 

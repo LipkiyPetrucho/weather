@@ -6,7 +6,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./weather:/weather
+      - ./weather_project:/weather_project
     environment:
       - DEBUG=1
       - SECRET_KEY=your_secret_key
