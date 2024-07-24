@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search History</title>
+</head>
+<body>
+    <h1>Search History</h1>
+    <ul>
+        {% for item in history %}
+            <li>{{ item.city }} ({{ item.search_date }})</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

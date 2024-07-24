@@ -8,6 +8,9 @@ EXPOSE 8000
 
 RUN pip install -r requirements.txt
 
+# Собрать статические файлы
+RUN python manage.py collectstatic --noinput
+
 COPY . .
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "weather_project.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "weather_project.wsgi:application", "--timeout 60"]

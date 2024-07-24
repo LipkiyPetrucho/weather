@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather App</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+</head>
+<body>
+    <h1>Weather App</h1>
+    <form method="post" action="/weather/">
+        {% csrf_token %}
+        <input id="city" name="city" type="text" placeholder="Enter city name">
+        <button type="submit">Get Weather</button>
+    </form>
+    <script>
+        $(function() {
+            $("#city").autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: "/autocomplete/",
+                        data: { term: request.term },
+                        success: function(data) {
+                            response(data);
+                        }
+                    });
+                },
+                minLength: 2,
+            });
+        });
+    </script>
+
+    {% if weather_data %}
+    <h2>Weather in {{ weather_data.city }}</h2>
+    <p>Temperature: {{ weather_data.current_temperature }}°C</p>
+    {% endif %}
+
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %}
+
+    <h3>Recent Searches</h3>
+    <ul>
+        {% for city in recent_cities %}
+        <li>{{ city.city }} - {{ city.search_date }} - {{ weather_data.current_temperature }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
