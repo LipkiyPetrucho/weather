@@ -4,6 +4,7 @@ from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 from openmeteo_sdk.Variable import Variable
 
@@ -96,10 +97,20 @@ def track_search(request, temperature):
     if request.method == 'POST':
         city = request.POST.get('city')
         user = request.user
-        search, created = CitySearchHistory.objects.get_or_create(user=user, city=city)
-        search.search_count += 1
-        search.temperature = temperature
-        search.save()
+
+        # Creating a new entry in the search history
+        CitySearchHistory.objects.create(user=user, city=city, temperature=temperature, search_date=timezone.now())
+
+        # Update a record to count the number of searches
+        search_history = CitySearchHistory.objects.filter(user=user, city=city)
+        if search_history.exists():
+            search_record = search_history.latest('search_date')
+            search_record.search_count += 1
+            search_record.temperature = temperature
+            search_record.save()
+        else:
+            CitySearchHistory.objects.create(user=user, city=city, temperature=temperature, search_count=1)
+
         return JsonResponse({'status': 'ok'})
     return JsonResponse({'status': 'error'}, status=400)
 

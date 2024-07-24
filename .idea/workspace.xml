@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="add history">
-      <change afterPath="$PROJECT_DIR$/weather_project/weather/migrations/0003_citysearchhistory_temperature.py" afterDir="false" />
+    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="Added:&#10;Displaying temperature with tenths.&#10;Saving search history with temperature.&#10;Button to go to the query history page.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/templates/search_history.html" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/templates/search_history.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/templates/weather.html" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/templates/weather.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -106,7 +102,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721811884359</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added:&#10;Displaying temperature with tenths.&#10;Saving search history with temperature.&#10;Button to go to the query history page.">
+      <option name="closed" value="true" />
+      <created>1721855495826</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1721855495826</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -114,6 +118,7 @@
     <MESSAGE value="begin weather project" />
     <MESSAGE value="repair project" />
     <MESSAGE value="add history" />
-    <option name="LAST_COMMIT_MESSAGE" value="add history" />
+    <MESSAGE value="Added:&#10;Displaying temperature with tenths.&#10;Saving search history with temperature.&#10;Button to go to the query history page." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added:&#10;Displaying temperature with tenths.&#10;Saving search history with temperature.&#10;Button to go to the query history page." />
   </component>
 </project>
