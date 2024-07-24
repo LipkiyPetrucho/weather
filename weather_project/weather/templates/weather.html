@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Weather App</title>
+    <title>Weather</title>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 </head>
 <body>
-    <h1>Weather App</h1>
+    <h1>Weather in {{ city }}</h1>
+    <p>Temperature: {{ weather_data.current_temperature }}°C</p>
+    <p>Description: {{ weather_data.description }}</p>
+    <img src="http://openweathermap.org/img/wn/{{ weather_data.icon }}@2x.png" alt="Weather icon">
+
     <form method="post" action="/weather/">
         {% csrf_token %}
+        <label for="city">City:</label>
         <input id="city" name="city" type="text" placeholder="Enter city name">
         <button type="submit">Get Weather</button>
     </form>
@@ -42,8 +47,11 @@
     <h3>Recent Searches</h3>
     <ul>
         {% for city in recent_cities %}
-        <li>{{ city.city }} - {{ city.search_date }} - {{ weather_data.current_temperature }}</li>
+        <li>{{ city.city }} - {{ city.search_date }} - {{ city.temperature }}°C</li>
         {% endfor %}
     </ul>
+
+    <a href="{% url 'search_history' %}">View Search History</a>
+
 </body>
 </html>

@@ -36,6 +36,9 @@ def get_weather_data(city):
     current_temperature_2m = next(
         filter(lambda x: x.Variable() == Variable.temperature and x.Altitude() == 2, current_variables))
 
+    # Округление температуры до одного десятичного знака
+    temperature = round(current_temperature_2m.Value(), 1)
+
     weather_data = {
         "latitude": response.Latitude(),
         "longitude": response.Longitude(),
@@ -43,7 +46,7 @@ def get_weather_data(city):
         "timezone": response.Timezone(),
         "timezone_abbreviation": response.TimezoneAbbreviation(),
         "utc_offset_seconds": response.UtcOffsetSeconds(),
-        "current_temperature": current_temperature_2m.Value(),
+        "current_temperature": temperature,
         "city": city
     }
 
@@ -55,11 +58,14 @@ def weather_view(request):
     if request.method == 'POST':
         city = request.POST.get('city')
         request.session['last_city'] = city
-        track_search(request)  # Добавляем вызов track_search
+        weather_data = get_weather_data(city)
+        if weather_data is not None:
+            track_search(request, weather_data['current_temperature'])
     else:
         city = request.GET.get('city', 'Paris')
+        weather_data = get_weather_data(city)
 
-    weather_data = get_weather_data(city)
+
     if weather_data is None:
         return render(request, 'error.html', {"message": "City not found"})
 
@@ -86,12 +92,13 @@ def autocomplete(request):
     return JsonResponse([], safe=False)
 
 @login_required
-def track_search(request):
+def track_search(request, temperature):
     if request.method == 'POST':
         city = request.POST.get('city')
         user = request.user
         search, created = CitySearchHistory.objects.get_or_create(user=user, city=city)
         search.search_count += 1
+        search.temperature = temperature
         search.save()
         return JsonResponse({'status': 'ok'})
     return JsonResponse({'status': 'error'}, status=400)

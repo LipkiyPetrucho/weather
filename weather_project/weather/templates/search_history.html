@@ -7,7 +7,7 @@
     <h1>Search History</h1>
     <ul>
         {% for item in history %}
-            <li>{{ item.city }} ({{ item.search_date }})</li>
+            <li>{{ item.city }} ({{ item.search_date }}) - {{ item.temperature }}°C</li>
         {% endfor %}
     </ul>
 </body>

@@ -7,6 +7,7 @@ class CitySearchHistory(models.Model):
     search_date = models.DateTimeField(auto_now_add=True)
     search_count = models.IntegerField(default=0)
     last_searched = models.DateTimeField(auto_now=True)
+    temperature = models.FloatField(default=18.0)
 
     def __str__(self):
         return f'{self.city} by {self.user.username} on {self.search_date}'
