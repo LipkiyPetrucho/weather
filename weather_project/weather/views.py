@@ -1,5 +1,8 @@
 import openmeteo_requests
 import requests
+import requests_cache
+from urllib3.util import Retry
+from requests.adapters import HTTPAdapter
 from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -10,6 +13,16 @@ from openmeteo_sdk.Variable import Variable
 
 from .models import CitySearchHistory
 
+cache_session = requests_cache.CachedSession('.cache', expire_after=3600)
+retry_strategy = Retry(
+    total=5,
+    backoff_factor=0.2,
+    status_forcelist=[429, 500, 502, 503, 504],
+)
+adapter = HTTPAdapter(max_retries=retry_strategy)
+cache_session.mount("http://", adapter)
+cache_session.mount("https://", adapter)
+openmeteo = openmeteo_requests.Client(session=cache_session)
 
 def get_weather_data(city):
     geocode_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city}"
@@ -122,4 +135,3 @@ def search_statistics(request):
 def search_history(request):
     history = CitySearchHistory.objects.filter(user=request.user).order_by('-search_date')
     return render(request, 'search_history.html', {'history': history})
-
