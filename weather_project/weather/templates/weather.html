@@ -2,20 +2,24 @@
 <html>
 <head>
     <title>Weather</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 </head>
-<body>
-    <h1>Weather in {{ city }}</h1>
-    <p>Temperature: {{ weather_data.current_temperature }}°C</p>
-    <img src="http://openweathermap.org/img/wn/{{ weather_data.icon }}@2x.png" alt="Weather icon">
+<body class="container mt-5">
+    <h1 class="text-center">Weather in {{ city }}</h1>
+    <div class="text-center">
+      <i class="fas fa-cloud-sun"></i>
+      <p>Temperature: {{ weather_data.current_temperature }}°C</p>
+    </div>
 
-    <form method="post" action="/weather/">
+    <form method="post" action="/weather/" class="form-inline justify-content-center my-4">
         {% csrf_token %}
-        <label for="city">City:</label>
-        <input id="city" name="city" type="text" placeholder="Enter city name">
-        <button type="submit">Get Weather</button>
+        <i class="fas fa-city"></i>
+        <input id="city" name="city" type="text" class="form-control mr-2" placeholder="Enter city name">
+        <button type="submit" class="btn btn-info">Get Weather</button>
     </form>
     <script>
         $(function() {
@@ -34,17 +38,14 @@
         });
     </script>
 
-    {% if weather_data %}
-    <h2>Weather in {{ weather_data.city }}</h2>
-    <p>Temperature: {{ weather_data.current_temperature }}°C</p>
-    {% endif %}
-
     {% if message %}
-    <p>{{ message }}</p>
+    <div class="alert alert-info text-center">{{ message }}</div>
     {% endif %}
 
     {% if last_city %}
-        <button onclick="getWeatherForLastCity()">Get Weather for {{ last_city }}</button>
+    <div class="text-center mb-4">
+        <button onclick="getWeatherForLastCity()" class="btn btn-info">Get Weather for {{ last_city }}</button>
+    </div>
     {% endif %}
 
     <script>
@@ -70,18 +71,21 @@
             form.submit();
         }
     </script>
+    <div class="recent-searches">
+        <h3>Recent Searches</h3>
+        <ul class="list-group">
+            {% for city in recent_cities %}
+            <li class="list-group-item">{{ city.city }} - {{ city.search_date }} - {{ city.temperature }}°C</li>
+            {% endfor %}
+        </ul>
+    </div>
 
-    <h3>Recent Searches</h3>
-    <ul>
-        {% for city in recent_cities %}
-        <li>{{ city.city }} - {{ city.search_date }} - {{ city.temperature }}°C</li>
-        {% endfor %}
-    </ul>
-
-    <a href="{% url 'search_history' %}">View Search History</a>
+    <div class="text-center mt-4">
+      <a href="{% url 'search_history' %}" class="btn btn-info">View Search History</a>
+    </div>
 
     <h3>City Search Counts</h3>
-    <button onclick="fetchCitySearchCounts()">Get City Search Counts</button>
+    <button onclick="fetchCitySearchCounts()" class="btn btn-info">Get City Search Counts</button>
     <div id="city-search-counts"></div>
 
     <script>

@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="added a button to view the weather in the city the user was looking at earlier">
+    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="added button showing how many times you have entered what city">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/templates/weather.html" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/templates/weather.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather_project/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +136,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721938380025</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="added button showing how many times you have entered what city">
+      <option name="closed" value="true" />
+      <created>1721939432041</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1721939432041</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -145,6 +156,7 @@
     <MESSAGE value="Fixed bug when re-entering a city" />
     <MESSAGE value="caching added" />
     <MESSAGE value="added a button to view the weather in the city the user was looking at earlier" />
-    <option name="LAST_COMMIT_MESSAGE" value="added a button to view the weather in the city the user was looking at earlier" />
+    <MESSAGE value="added button showing how many times you have entered what city" />
+    <option name="LAST_COMMIT_MESSAGE" value="added button showing how many times you have entered what city" />
   </component>
 </project>
