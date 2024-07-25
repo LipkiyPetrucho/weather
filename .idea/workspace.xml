@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="caching added">
+    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="added a button to view the weather in the city the user was looking at earlier">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/templates/weather.html" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/templates/weather.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +125,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721925467456</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="added a button to view the weather in the city the user was looking at earlier">
+      <option name="closed" value="true" />
+      <created>1721938380025</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1721938380025</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -139,6 +144,7 @@
     <MESSAGE value="Added:&#10;Displaying temperature with tenths.&#10;Saving search history with temperature.&#10;Button to go to the query history page." />
     <MESSAGE value="Fixed bug when re-entering a city" />
     <MESSAGE value="caching added" />
-    <option name="LAST_COMMIT_MESSAGE" value="caching added" />
+    <MESSAGE value="added a button to view the weather in the city the user was looking at earlier" />
+    <option name="LAST_COMMIT_MESSAGE" value="added a button to view the weather in the city the user was looking at earlier" />
   </component>
 </project>

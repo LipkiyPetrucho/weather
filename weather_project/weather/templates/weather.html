@@ -80,5 +80,24 @@
 
     <a href="{% url 'search_history' %}">View Search History</a>
 
+    <h3>City Search Counts</h3>
+    <button onclick="fetchCitySearchCounts()">Get City Search Counts</button>
+    <div id="city-search-counts"></div>
+
+    <script>
+        function fetchCitySearchCounts() {
+            $.ajax({
+                url: "{% url 'city_search_count' %}",
+                method: "GET",
+                success: function(data) {
+                    const countsDiv = document.getElementById('city-search-counts');
+                    countsDiv.innerHTML = '<ul>' + data.map(item => `<li>${item.city}: ${item.search_count}</li>`).join('') + '</ul>';
+                },
+                error: function(error) {
+                    console.error("Error fetching city search counts:", error);
+                }
+            });
+        }
+    </script>
 </body>
 </html>
