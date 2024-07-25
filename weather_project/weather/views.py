@@ -95,7 +95,8 @@ def weather_view(request):
         "weather_data": weather_data,
         "recent_cities": recent_cities,
         "city": city,
-        'message': message
+        "message": message,
+        "last_city": last_city,
     })
 
 def autocomplete(request):
@@ -135,3 +136,10 @@ def search_statistics(request):
 def search_history(request):
     history = CitySearchHistory.objects.filter(user=request.user).order_by('-search_date')
     return render(request, 'search_history.html', {'history': history})
+
+@login_required
+def get_city_search_count(request):
+    if request.method == 'GET':
+        city_counts = CitySearchHistory.objects.values('city').annotate(search_count=Count('city')).order_by('-search_count')
+        return JsonResponse(list(city_counts), safe=False)
+    return JsonResponse({'status': 'error'}, status=400)

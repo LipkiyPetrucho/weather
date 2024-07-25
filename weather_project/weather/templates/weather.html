@@ -9,7 +9,6 @@
 <body>
     <h1>Weather in {{ city }}</h1>
     <p>Temperature: {{ weather_data.current_temperature }}°C</p>
-    <p>Description: {{ weather_data.description }}</p>
     <img src="http://openweathermap.org/img/wn/{{ weather_data.icon }}@2x.png" alt="Weather icon">
 
     <form method="post" action="/weather/">
@@ -43,6 +42,34 @@
     {% if message %}
     <p>{{ message }}</p>
     {% endif %}
+
+    {% if last_city %}
+        <button onclick="getWeatherForLastCity()">Get Weather for {{ last_city }}</button>
+    {% endif %}
+
+    <script>
+        function getWeatherForLastCity() {
+            const city = "{{ last_city }}";
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = "{% url 'weather' %}";
+            const csrfToken = '{{ csrf_token }}';
+            const csrfInput = document.createElement('input');
+            csrfInput.type = 'hidden';
+            csrfInput.name = 'csrfmiddlewaretoken';
+            csrfInput.value = csrfToken;
+            form.appendChild(csrfInput);
+
+            const cityInput = document.createElement('input');
+            cityInput.type = 'hidden';
+            cityInput.name = 'city';
+            cityInput.value = city;
+            form.appendChild(cityInput);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
 
     <h3>Recent Searches</h3>
     <ul>
