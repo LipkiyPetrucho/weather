@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="added button showing how many times you have entered what city">
+    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="Icons and bootstrap styles added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/.cache.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/.cache.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/templates/weather.html" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/templates/weather.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather_project/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,9 +33,9 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2jO0GQ9wBOQzxD5iVLxTvkewD1W" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -44,18 +44,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "day-4",
-    "ignore.virus.scanning.warn.message": "true",
-    "settings.editor.selected.configurable": "preferences.externalTools"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;day-4&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.externalTools&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\django\weather\weather_project\weather\templates\" />
@@ -144,7 +144,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721939432041</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Icons and bootstrap styles added">
+      <option name="closed" value="true" />
+      <created>1721945476346</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1721945476346</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -157,6 +165,7 @@
     <MESSAGE value="caching added" />
     <MESSAGE value="added a button to view the weather in the city the user was looking at earlier" />
     <MESSAGE value="added button showing how many times you have entered what city" />
-    <option name="LAST_COMMIT_MESSAGE" value="added button showing how many times you have entered what city" />
+    <MESSAGE value="Icons and bootstrap styles added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Icons and bootstrap styles added" />
   </component>
 </project>

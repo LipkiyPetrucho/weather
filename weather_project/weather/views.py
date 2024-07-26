@@ -1,8 +1,7 @@
 import openmeteo_requests
 import requests
 import requests_cache
-from urllib3.util import Retry
-from requests.adapters import HTTPAdapter
+from retry_requests import retry
 from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -13,20 +12,14 @@ from openmeteo_sdk.Variable import Variable
 
 from .models import CitySearchHistory
 
+# Настройка клиента Open-Meteo API с кешем и механизмом повторных запросов
 cache_session = requests_cache.CachedSession('.cache', expire_after=3600)
-retry_strategy = Retry(
-    total=5,
-    backoff_factor=0.2,
-    status_forcelist=[429, 500, 502, 503, 504],
-)
-adapter = HTTPAdapter(max_retries=retry_strategy)
-cache_session.mount("http://", adapter)
-cache_session.mount("https://", adapter)
-openmeteo = openmeteo_requests.Client(session=cache_session)
+retry_session = retry(cache_session, retries=5, backoff_factor=0.2)
+openmeteo = openmeteo_requests.Client(session=retry_session)
 
 def get_weather_data(city):
     geocode_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city}"
-    geocode_response = requests.get(geocode_url)
+    geocode_response = retry_session.get(geocode_url)
     geocode_response.raise_for_status()
     geocode_data = geocode_response.json()
 
@@ -36,35 +29,71 @@ def get_weather_data(city):
     latitude = geocode_data['results'][0]['latitude']
     longitude = geocode_data['results'][0]['longitude']
 
-    om = openmeteo_requests.Client()
     params = {
         "latitude": latitude,
         "longitude": longitude,
-        "hourly": ["temperature_2m", "precipitation"],
-        "current": ["temperature_2m"]
+        "hourly": "temperature_2m,precipitation,weathercode",
+        "current_weather": True
     }
 
-    response = om.weather_api("https://api.open-meteo.com/v1/forecast", params=params)[0]
-    current = response.Current()
-    current_variables = list(map(lambda i: current.Variables(i), range(0, current.VariablesLength())))
-    current_temperature_2m = next(
-        filter(lambda x: x.Variable() == Variable.temperature and x.Altitude() == 2, current_variables))
+    response = retry_session.get("https://api.open-meteo.com/v1/forecast", params=params)
+    response.raise_for_status()
+    weather_data = response.json()
 
-    # Округление температуры до одного десятичного знака
-    temperature = round(current_temperature_2m.Value(), 1)
+    if 'current_weather' not in weather_data:
+        return None
 
-    weather_data = {
-        "latitude": response.Latitude(),
-        "longitude": response.Longitude(),
-        "elevation": response.Elevation(),
-        "timezone": response.Timezone(),
-        "timezone_abbreviation": response.TimezoneAbbreviation(),
-        "utc_offset_seconds": response.UtcOffsetSeconds(),
+    current_weather = weather_data['current_weather']
+    temperature = round(current_weather['temperature'], 1)
+    weather_code = current_weather['weathercode']
+    weather_description, weather_icon = get_weather_description_and_icon(weather_code)
+
+    return {
+        "latitude": weather_data['latitude'],
+        "longitude": weather_data['longitude'],
+        "elevation": weather_data['elevation'],
+        "timezone": weather_data['timezone'],
+        "timezone_abbreviation": weather_data['timezone_abbreviation'],
+        "utc_offset_seconds": weather_data['utc_offset_seconds'],
         "current_temperature": temperature,
+        "weather_description": weather_description,
+        "weather_icon": weather_icon,
         "city": city
     }
 
-    return weather_data
+def get_weather_description_and_icon(weather_code):
+    weather_codes = {
+        0: ("Clear sky", "☀️"),
+        1: ("Mainly clear", "🌤️"),
+        2: ("Partly cloudy", "⛅"),
+        3: ("Overcast", "☁️"),
+        45: ("Fog", "🌫️"),
+        48: ("Depositing rime fog", "🌫️"),
+        51: ("Drizzle: Light", "🌦️"),
+        53: ("Drizzle: Moderate", "🌧️"),
+        55: ("Drizzle: Dense intensity", "🌧️"),
+        56: ("Freezing Drizzle: Light", "🌨️"),
+        57: ("Freezing Drizzle: Dense intensity", "🌨️"),
+        61: ("Rain: Slight", "🌧️"),
+        63: ("Rain: Moderate", "🌧️"),
+        65: ("Rain: Heavy intensity", "🌧️"),
+        66: ("Freezing Rain: Light", "🌨️"),
+        67: ("Freezing Rain: Heavy intensity", "🌨️"),
+        71: ("Snow fall: Slight", "🌨️"),
+        73: ("Snow fall: Moderate", "🌨️"),
+        75: ("Snow fall: Heavy intensity", "🌨️"),
+        77: ("Snow grains", "🌨️"),
+        80: ("Rain showers: Slight", "🌧️"),
+        81: ("Rain showers: Moderate", "🌧️"),
+        82: ("Rain showers: Violent", "🌧️"),
+        85: ("Snow showers: Slight", "🌨️"),
+        86: ("Snow showers: Heavy", "🌨️"),
+        95: ("Thunderstorm: Slight or moderate", "⛈️"),
+        96: ("Thunderstorm with slight hail", "⛈️"),
+        99: ("Thunderstorm with heavy hail", "⛈️")
+    }
+
+    return weather_codes.get(weather_code, ("Unknown", "❓"))
 
 @login_required
 @csrf_exempt
@@ -78,7 +107,6 @@ def weather_view(request):
     else:
         city = request.GET.get('city', 'Paris')
         weather_data = get_weather_data(city)
-
 
     if weather_data is None:
         return render(request, 'error.html', {"message": "City not found"})
@@ -98,6 +126,7 @@ def weather_view(request):
         "message": message,
         "last_city": last_city,
     })
+
 
 def autocomplete(request):
     if 'term' in request.GET:

@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Weather</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" rel="stylesheet">
+    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 </head>
 <body class="container mt-5">
     <h1 class="text-center">Weather in {{ city }}</h1>
     <div class="text-center">
-      <i class="fas fa-cloud-sun"></i>
-      <p>Temperature: {{ weather_data.current_temperature }}°C</p>
+      <p>Temperature: {{ weather_data.current_temperature }}°C {{ weather_data.weather_icon }}</p>
     </div>
 
     <form method="post" action="/weather/" class="form-inline justify-content-center my-4">
         {% csrf_token %}
-        <i class="fas fa-city"></i>
+        <p><i class="fas fa-city"></i> &nbsp;</p>
         <input id="city" name="city" type="text" class="form-control mr-2" placeholder="Enter city name">
         <button type="submit" class="btn btn-info">Get Weather</button>
     </form>
@@ -71,6 +73,18 @@
             form.submit();
         }
     </script>
+
+    {% if weather_data %}
+        <div class="card mt-3">
+            <div class="card-body">
+                <h2 class="card-title">{{ weather_data.city }}</h2>
+                <p class="card-text">Temperature: {{ weather_data.current_temperature }}°C</p>
+                <p class="card-text">Weather: {{ weather_data.weather_description }} {{ weather_data.weather_icon }}</p>
+                <p class="card-text">Timezone: {{ weather_data.timezone_abbreviation }} ({{ weather_data.timezone }})</p>
+            </div>
+        </div>
+    {% endif %}
+
     <div class="recent-searches">
         <h3>Recent Searches</h3>
         <ul class="list-group">
