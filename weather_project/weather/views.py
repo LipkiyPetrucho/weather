@@ -111,7 +111,7 @@ def weather_view(request):
     if weather_data is None:
         return render(request, 'error.html', {"message": "City not found"})
 
-    recent_cities = CitySearchHistory.objects.filter(user=request.user).order_by('-search_date')[:5]
+    recent_cities = CitySearchHistory.objects.filter(user=request.user).order_by('-search_date')[:3]
 
     last_city = request.session.get('last_city')
     if last_city:
@@ -167,8 +167,6 @@ def search_history(request):
     return render(request, 'search_history.html', {'history': history})
 
 @login_required
-def get_city_search_count(request):
-    if request.method == 'GET':
-        city_counts = CitySearchHistory.objects.values('city').annotate(search_count=Count('city')).order_by('-search_count')
-        return JsonResponse(list(city_counts), safe=False)
-    return JsonResponse({'status': 'error'}, status=400)
+def city_search_count_view(request):
+    city_counts = CitySearchHistory.objects.values('city').annotate(search_count=Count('city')).order_by('-search_count')
+    return render(request, 'city_search_count.html', {'city_counts': city_counts})

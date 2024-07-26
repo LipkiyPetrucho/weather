@@ -1,0 +1,15 @@
+.container {
+    max-width: 600px;
+    margin-top: 50px;
+}
+.weather-card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 20px;
+}
+.weather-icon {
+    font-size: 50px;
+}
+.recent-searches {
+    margin-top: 20px;
+}

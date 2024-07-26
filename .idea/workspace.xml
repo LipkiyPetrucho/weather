@@ -4,11 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="Icons and bootstrap styles added">
+    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="added weather status display, information about the presence of rain or thunderstorms">
+      <change afterPath="$PROJECT_DIR$/weather_project/weather/static/css/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weather_project/weather/static/js/scripts.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weather_project/weather/templates/base.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/weather_project/weather/templates/city_search_count.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/.cache.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/.cache.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/templates/search_history.html" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/templates/search_history.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/templates/weather.html" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/templates/weather.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,7 +34,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="day-3" />
+        <entry key="$PROJECT_DIR$" value="day-4" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -44,20 +50,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;day-4&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.externalTools&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "day-5",
+    "ignore.virus.scanning.warn.message": "true",
+    "settings.editor.selected.configurable": "preferences.externalTools"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\django\weather\weather_project\weather\static\css" />
       <recent name="D:\django\weather\weather_project\weather\templates\" />
       <recent name="D:\django\weather\weather_project\weather\templates\weather" />
       <recent name="D:\django\weather\weather_project" />
@@ -152,7 +159,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721945476346</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="added weather status display, information about the presence of rain or thunderstorms">
+      <option name="closed" value="true" />
+      <created>1722023055672</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1722023055672</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -166,6 +181,7 @@
     <MESSAGE value="added a button to view the weather in the city the user was looking at earlier" />
     <MESSAGE value="added button showing how many times you have entered what city" />
     <MESSAGE value="Icons and bootstrap styles added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Icons and bootstrap styles added" />
+    <MESSAGE value="added weather status display, information about the presence of rain or thunderstorms" />
+    <option name="LAST_COMMIT_MESSAGE" value="added weather status display, information about the presence of rain or thunderstorms" />
   </component>
 </project>

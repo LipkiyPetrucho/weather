@@ -1,44 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" rel="stylesheet">
-    <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-</head>
-<body class="container mt-5">
+{% extends "base.html" %}
+{% block title %}Weather{% endblock %}
+{% block content %}
+<div class="weather-card">
     <h1 class="text-center">Weather in {{ city }}</h1>
     <div class="text-center">
-      <p>Temperature: {{ weather_data.current_temperature }}°C {{ weather_data.weather_icon }}</p>
+        <p>Temperature: {{ weather_data.current_temperature }}°C {{ weather_data.weather_icon }}</p>
     </div>
 
     <form method="post" action="/weather/" class="form-inline justify-content-center my-4">
         {% csrf_token %}
-        <p><i class="fas fa-city"></i> &nbsp;</p>
+        <i class="fas fa-city"></i> &nbsp;
         <input id="city" name="city" type="text" class="form-control mr-2" placeholder="Enter city name">
         <button type="submit" class="btn btn-info">Get Weather</button>
     </form>
-    <script>
-        $(function() {
-            $("#city").autocomplete({
-                source: function(request, response) {
-                    $.ajax({
-                        url: "/autocomplete/",
-                        data: { term: request.term },
-                        success: function(data) {
-                            response(data);
-                        }
-                    });
-                },
-                minLength: 2,
-            });
-        });
-    </script>
 
     {% if message %}
     <div class="alert alert-info text-center">{{ message }}</div>
@@ -46,76 +20,36 @@
 
     {% if last_city %}
     <div class="text-center mb-4">
-        <button onclick="getWeatherForLastCity()" class="btn btn-info">Get Weather for {{ last_city }}</button>
+        <button data-url="{% url 'weather' %}" data-last-city="{{ last_city }}" onclick="getWeatherForLastCity(this)" class="btn btn-info">
+            Get Weather for {{ last_city }}
+        </button>
     </div>
     {% endif %}
 
-    <script>
-        function getWeatherForLastCity() {
-            const city = "{{ last_city }}";
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = "{% url 'weather' %}";
-            const csrfToken = '{{ csrf_token }}';
-            const csrfInput = document.createElement('input');
-            csrfInput.type = 'hidden';
-            csrfInput.name = 'csrfmiddlewaretoken';
-            csrfInput.value = csrfToken;
-            form.appendChild(csrfInput);
-
-            const cityInput = document.createElement('input');
-            cityInput.type = 'hidden';
-            cityInput.name = 'city';
-            cityInput.value = city;
-            form.appendChild(cityInput);
-
-            document.body.appendChild(form);
-            form.submit();
-        }
-    </script>
-
     {% if weather_data %}
-        <div class="card mt-3">
-            <div class="card-body">
-                <h2 class="card-title">{{ weather_data.city }}</h2>
-                <p class="card-text">Temperature: {{ weather_data.current_temperature }}°C</p>
-                <p class="card-text">Weather: {{ weather_data.weather_description }} {{ weather_data.weather_icon }}</p>
-                <p class="card-text">Timezone: {{ weather_data.timezone_abbreviation }} ({{ weather_data.timezone }})</p>
-            </div>
-        </div>
+    <div class="text-center mt-3">
+        <h2>{{ weather_data.city }}</h2>
+        <p>Temperature: {{ weather_data.current_temperature }}°C</p>
+        <p>Weather: {{ weather_data.weather_description }} {{ weather_data.weather_icon }}</p>
+        <p>Timezone: {{ weather_data.timezone_abbreviation }} ({{ weather_data.timezone }})</p>
+    </div>
     {% endif %}
 
     <div class="recent-searches">
         <h3>Recent Searches</h3>
-        <ul class="list-group">
-            {% for city in recent_cities %}
-            <li class="list-group-item">{{ city.city }} - {{ city.search_date }} - {{ city.temperature }}°C</li>
-            {% endfor %}
-        </ul>
+            <ul class="list-group">
+                {% for city in recent_cities %}
+                <li class="list-group-item">{{ city.city }} - {{ city.search_date }} - {{ city.temperature }}°C</li>
+                {% endfor %}
+                <div class="text-center mt-4">
+                  <a href="{% url 'search_history' %}" class="btn btn-info">View Search History</a>
+                </div>
+            </ul>
     </div>
+
 
     <div class="text-center mt-4">
-      <a href="{% url 'search_history' %}" class="btn btn-info">View Search History</a>
+      <a href="{% url 'city_search_count' %}" class="btn btn-info">Get City Search Counts</a>
     </div>
-
-    <h3>City Search Counts</h3>
-    <button onclick="fetchCitySearchCounts()" class="btn btn-info">Get City Search Counts</button>
-    <div id="city-search-counts"></div>
-
-    <script>
-        function fetchCitySearchCounts() {
-            $.ajax({
-                url: "{% url 'city_search_count' %}",
-                method: "GET",
-                success: function(data) {
-                    const countsDiv = document.getElementById('city-search-counts');
-                    countsDiv.innerHTML = '<ul>' + data.map(item => `<li>${item.city}: ${item.search_count}</li>`).join('') + '</ul>';
-                },
-                error: function(error) {
-                    console.error("Error fetching city search counts:", error);
-                }
-            });
-        }
-    </script>
-</body>
-</html>
+</div>
+{% endblock %}

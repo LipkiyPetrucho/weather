@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}City Search Counts{% endblock %}
+{% block content %}
+<h1 class="text-center">City Search Counts</h1>
+<ul class="list-group">
+    {% for item in city_counts %}
+    <li class="list-group-item">{{ item.city }}: {{ item.search_count }}</li>
+    {% endfor %}
+</ul>
+<div class="text-center mt-4">
+    <a href="{% url 'weather' %}" class="btn btn-info">Back to Weather</a>
+</div>
+{% endblock %}

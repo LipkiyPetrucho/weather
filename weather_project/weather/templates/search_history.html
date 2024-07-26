@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Search History</title>
-</head>
-<body>
-    <h1>Search History</h1>
-    <ul>
-        {% for item in history %}
-            <li>{{ item.city }} ({{ item.search_date }}) - {{ item.temperature }}°C</li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Search Histor{% endblock %}
+{% block content %}
+<h1 class="text-center">Search Histor</h1>
+  <ul>
+    {% for item in history %}
+      <li>{{ item.city }} ({{ item.search_date }}) - {{ item.temperature }}°C</li>
+    {% endfor %}
+  </ul>
+<div class="text-center mt-4">
+  <a href="{% url 'weather' %}" class="btn btn-info">Back to Weather</a>
+</div>
+{% endblock %}
