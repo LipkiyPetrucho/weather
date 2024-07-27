@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (weather_view, autocomplete, track_search,
-                    search_statistics, search_history, city_search_count_view)
+                    search_statistics, search_history, city_search_count_view,)
 
 urlpatterns = [
     path('', weather_view, name='weather_view'),

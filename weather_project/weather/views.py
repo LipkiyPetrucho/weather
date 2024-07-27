@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 
+from .forms import CityForm
 from .models import CitySearchHistory
 
 # Настройка клиента Open-Meteo API с кешем и механизмом повторных запросов
@@ -103,8 +104,10 @@ def get_weather_description_and_icon(weather_code):
 @login_required
 @csrf_exempt
 def weather_view(request):
-    if request.method == 'POST':
-        city = request.POST.get('city')
+    form = CityForm(request.POST or None)
+
+    if request.method == 'POST' and form.is_valid():
+        city = form.cleaned_data['city']
         request.session['last_city'] = city
         weather_data = get_weather_data(city)
         if weather_data is not None:
@@ -113,24 +116,28 @@ def weather_view(request):
         city = request.GET.get('city', 'Paris')
         weather_data = get_weather_data(city)
 
+    form = CityForm()
+
     if weather_data is None:
         return render(request, 'error.html', {"message": "City not found"})
 
     recent_cities = CitySearchHistory.objects.filter(user=request.user).order_by('-search_date')[:3]
-
     last_city = request.session.get('last_city')
+
     if last_city:
         message = f"Do you want to see the weather in {last_city} again?"
     else:
         message = "Enter a city name to see the weather."
 
-    return render(request, 'weather.html', {
-        "weather_data": weather_data,
-        "recent_cities": recent_cities,
-        "city": city,
-        "message": message,
-        "last_city": last_city,
-    })
+    context = {"weather_data": weather_data,
+               "recent_cities": recent_cities,
+               "city": city,
+               "message": message,
+               "last_city": last_city,
+               "form": form,
+               }
+
+    return render(request, 'weather.html', context)
 
 
 def autocomplete(request):

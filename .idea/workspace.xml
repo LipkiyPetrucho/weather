@@ -4,14 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="updated templates where CSS and JavaScript are placed in separate files and pages use template inheritance.">
+    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="corrected static settings for correct operation of the application via docker">
+      <change afterPath="$PROJECT_DIR$/weather_project/weather/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/.cache.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/.cache.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/templates/weather.html" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/templates/weather.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather_project/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather_project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather_project/urls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,9 +21,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="Dockerfile" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -171,7 +171,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722027185417</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="corrected static settings for correct operation of the application via docker">
+      <option name="closed" value="true" />
+      <created>1722094155316</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1722094155316</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -187,6 +195,7 @@
     <MESSAGE value="Icons and bootstrap styles added" />
     <MESSAGE value="added weather status display, information about the presence of rain or thunderstorms" />
     <MESSAGE value="updated templates where CSS and JavaScript are placed in separate files and pages use template inheritance." />
-    <option name="LAST_COMMIT_MESSAGE" value="updated templates where CSS and JavaScript are placed in separate files and pages use template inheritance." />
+    <MESSAGE value="corrected static settings for correct operation of the application via docker" />
+    <option name="LAST_COMMIT_MESSAGE" value="corrected static settings for correct operation of the application via docker" />
   </component>
 </project>
