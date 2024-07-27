@@ -1,5 +1,6 @@
+import time
+
 import openmeteo_requests
-import requests
 import requests_cache
 from retry_requests import retry
 from django.db.models import Count
@@ -8,7 +9,6 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
-from openmeteo_sdk.Variable import Variable
 
 from .models import CitySearchHistory
 
@@ -18,6 +18,7 @@ retry_session = retry(cache_session, retries=5, backoff_factor=0.2)
 openmeteo = openmeteo_requests.Client(session=retry_session)
 
 def get_weather_data(city):
+    start_time = time.time()
     geocode_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city}"
     geocode_response = retry_session.get(geocode_url)
     geocode_response.raise_for_status()
@@ -36,9 +37,13 @@ def get_weather_data(city):
         "current_weather": True
     }
 
-    response = retry_session.get("https://api.open-meteo.com/v1/forecast", params=params)
+    response = retry_session.get("https://api.open-meteo.com/v1/forecast",
+                                 params=params)
     response.raise_for_status()
     weather_data = response.json()
+
+    end_time = time.time()
+    print(f"Time taken for get_weather_data: {end_time - start_time} seconds")
 
     if 'current_weather' not in weather_data:
         return None
