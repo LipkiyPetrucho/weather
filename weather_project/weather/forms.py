@@ -2,7 +2,6 @@ from django.forms import ModelForm, TextInput
 
 from .models import CitySearchHistory
 
-
 class CityForm(ModelForm):
     class Meta:
         model = CitySearchHistory
@@ -10,5 +9,6 @@ class CityForm(ModelForm):
         widgets = {'city': TextInput(attrs={'class': 'form-control mr-2',
                                             'placeholder': 'Enter city name',
                                             'name': 'city',
-                                            'id': 'city',
+                                            'id': 'id_city',
+                                            'autocomplete': 'off',
                                             })}

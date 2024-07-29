@@ -1,15 +1,32 @@
 $(function() {
-    $("#city").autocomplete({
-        source: function(request, response) {
-            $.ajax({
-                url: "/autocomplete/",
-                data: { term: request.term },
-                success: function(data) {
-                    response(data);
-                }
-            });
+    var token = "deb5c7c3f11a7c507c9b555a43ee9a58c493c8b8";
+
+    function formatResult(value, currentValue, suggestion, options) {
+        var newValue = suggestion.data.city;
+        suggestion.value = newValue;
+        return $.Suggestions.prototype.formatResult.call(this, newValue, currentValue, suggestion, options);
+    }
+
+    function formatSelected(suggestion) {
+        return suggestion.data.city;
+    }
+
+    $("#id_city").suggestions({
+        token: token,
+        type: "ADDRESS",
+        hint: false,
+        bounds: "city",
+        language: "en",
+        geoLocation: false,
+        enrichmentEnabled: false,
+        constraints: {
+            locations: { country: "*" }
         },
-        minLength: 2,
+        formatResult: formatResult,
+        formatSelected: formatSelected,
+        onSelect: function(suggestion) {
+            console.log(suggestion);
+        }
     });
 });
 

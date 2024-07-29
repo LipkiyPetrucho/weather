@@ -1,5 +1,4 @@
 import time
-
 import openmeteo_requests
 import requests_cache
 from retry_requests import retry
@@ -17,6 +16,7 @@ from .models import CitySearchHistory
 cache_session = requests_cache.CachedSession('.cache', expire_after=3600)
 retry_session = retry(cache_session, retries=5, backoff_factor=0.2)
 openmeteo = openmeteo_requests.Client(session=retry_session)
+
 
 def get_weather_data(city):
     start_time = time.time()
@@ -140,10 +140,12 @@ def weather_view(request):
     return render(request, 'weather.html', context)
 
 
+@csrf_exempt
 def autocomplete(request):
     if 'term' in request.GET:
-        qs = CitySearchHistory.objects.filter(city__icontains=request.GET.get('term')).distinct()
-        cities = list(qs.values_list('city', flat=True))
+        query = request.GET.get('term')
+        geocode_data = get_weather_data(query)
+        cities = [result['name'] for result in geocode_data.get('results', [])]
         return JsonResponse(cities, safe=False)
     return JsonResponse([], safe=False)
 

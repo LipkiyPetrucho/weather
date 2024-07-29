@@ -3,6 +3,7 @@ attrs==23.2.0
 cattrs==23.2.3
 certifi==2024.7.4
 charset-normalizer==3.3.2
+dadata
 Django==5.0.7
 djangorestframework==3.15.2
 djangorestframework-simplejwt==5.3.1
