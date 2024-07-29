@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .forms import CityForm
 from .models import CitySearchHistory
+from .redis_helper import increment_city_search_count, get_top_cities
 
 # Настройка клиента Open-Meteo API с кешем и механизмом повторных запросов
 cache_session = requests_cache.CachedSession('.cache', expire_after=3600)
@@ -144,15 +145,8 @@ def track_search(request, temperature):
         # Creating a new entry in the search history
         CitySearchHistory.objects.create(user=user, city=city, temperature=temperature, search_date=timezone.now())
 
-        # Update a record to count the number of searches
-        search_history = CitySearchHistory.objects.filter(user=user, city=city)
-        if search_history.exists():
-            search_record = search_history.latest('search_date')
-            search_record.search_count += 1
-            search_record.temperature = temperature
-            search_record.save()
-        else:
-            CitySearchHistory.objects.create(user=user, city=city, temperature=temperature, search_count=1)
+        # Increment the city search count in Redis
+        increment_city_search_count(city)
 
         return JsonResponse({'status': 'ok'})
     return JsonResponse({'status': 'error'}, status=400)
@@ -167,6 +161,7 @@ def search_history(request):
     return render(request, 'search_history.html', {'history': history})
 
 @login_required
-def city_search_count_view(request):
-    city_counts = CitySearchHistory.objects.values('city').annotate(search_count=Count('city')).order_by('-search_count')
-    return render(request, 'city_search_count.html', {'city_counts': city_counts})
+def city_search_count(request):
+    top_cities = get_top_cities()
+    data = [{'city': city.decode('utf-8'), 'search_count': int(count)} for city, count in top_cities]
+    return JsonResponse(data, safe=False)

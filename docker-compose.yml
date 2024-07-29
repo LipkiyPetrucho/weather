@@ -7,7 +7,16 @@ services:
       - "8000:8000"
     volumes:
       - ./weather_project:/weather_project
+    depends_on:
+      - redis
     environment:
       - DEBUG=1
       - SECRET_KEY=your_secret_key
       - ALLOWED_HOSTS=*
+
+
+  redis:
+    image: redis:latest
+    hostname: redis
+    ports:
+      - "6379:6379"
