@@ -1,4 +1,3 @@
-import time
 import openmeteo_requests
 import requests_cache
 from retry_requests import retry
@@ -19,7 +18,6 @@ openmeteo = openmeteo_requests.Client(session=retry_session)
 
 
 def get_weather_data(city):
-    start_time = time.time()
     geocode_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city}"
     geocode_response = retry_session.get(geocode_url)
     geocode_response.raise_for_status()
@@ -42,9 +40,6 @@ def get_weather_data(city):
                                  params=params)
     response.raise_for_status()
     weather_data = response.json()
-
-    end_time = time.time()
-    print(f"Time taken for get_weather_data: {end_time - start_time} seconds")
 
     if 'current_weather' not in weather_data:
         return None
@@ -139,15 +134,6 @@ def weather_view(request):
 
     return render(request, 'weather.html', context)
 
-
-@csrf_exempt
-def autocomplete(request):
-    if 'term' in request.GET:
-        query = request.GET.get('term')
-        geocode_data = get_weather_data(query)
-        cities = [result['name'] for result in geocode_data.get('results', [])]
-        return JsonResponse(cities, safe=False)
-    return JsonResponse([], safe=False)
 
 @login_required
 def track_search(request, temperature):

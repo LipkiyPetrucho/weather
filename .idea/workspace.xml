@@ -4,16 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="the structure of views and templates has been changed, part of the code has been moved to forms.py">
+    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="added plugin to get a drop-down list of city names after entering the first letter">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/.cache.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/.cache.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/static/js/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/static/js/scripts.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/templates/search_history.html" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/templates/search_history.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/templates/weather.html" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/templates/weather.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -190,7 +187,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722115604394</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="added plugin to get a drop-down list of city names after entering the first letter">
+      <option name="closed" value="true" />
+      <created>1722284197276</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1722284197276</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -208,6 +213,7 @@
     <MESSAGE value="updated templates where CSS and JavaScript are placed in separate files and pages use template inheritance." />
     <MESSAGE value="corrected static settings for correct operation of the application via docker" />
     <MESSAGE value="the structure of views and templates has been changed, part of the code has been moved to forms.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="the structure of views and templates has been changed, part of the code has been moved to forms.py" />
+    <MESSAGE value="added plugin to get a drop-down list of city names after entering the first letter" />
+    <option name="LAST_COMMIT_MESSAGE" value="added plugin to get a drop-down list of city names after entering the first letter" />
   </component>
 </project>
