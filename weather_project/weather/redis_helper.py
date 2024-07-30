@@ -1,5 +1,9 @@
+import redis
+from django.conf import settings
 from django_redis import get_redis_connection
 
+# Соединение с Redis
+redis_conn = redis.Redis(host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=settings.REDIS_DB)
 
 def increment_city_search_count(city):
     redis_conn = get_redis_connection("default")
