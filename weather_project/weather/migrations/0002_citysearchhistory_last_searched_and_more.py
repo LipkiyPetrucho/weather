@@ -4,20 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('weather', '0001_initial'),
+        ("weather", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='citysearchhistory',
-            name='last_searched',
+            model_name="citysearchhistory",
+            name="last_searched",
             field=models.DateTimeField(auto_now=True),
         ),
         migrations.AddField(
-            model_name='citysearchhistory',
-            name='search_count',
+            model_name="citysearchhistory",
+            name="search_count",
             field=models.IntegerField(default=0),
         ),
     ]

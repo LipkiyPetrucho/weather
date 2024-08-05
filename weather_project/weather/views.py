@@ -1,67 +1,83 @@
-import openmeteo_requests
+import requests
 import requests_cache
-from retry_requests import retry
+from django.conf import settings
+from requests.adapters import HTTPAdapter
 from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
+from urllib3 import Retry
 
-from .forms import CityForm
-from .models import CitySearchHistory
-from .redis_helper import increment_city_search_count, get_top_cities
+from weather.forms import CityForm
+from weather.models import CitySearchHistory
+from weather.redis_helper import increment_city_search_count, get_top_cities
 
-# Настройка клиента Open-Meteo API с кешем и механизмом повторных запросов
-cache_session = requests_cache.CachedSession('.cache', expire_after=3600)
-retry_session = retry(cache_session, retries=5, backoff_factor=0.2)
-openmeteo = openmeteo_requests.Client(session=retry_session)
+# Configuring Open-Meteo API client with cache and repeated requests mechanism.
+cache_session = requests_cache.CachedSession(".cache", expire_after=3600)
+retries = Retry(
+    total=5,
+    backoff_factor=0.2,
+    status_forcelist=[502, 503, 504],
+)
+cache_session.mount("https://", HTTPAdapter(max_retries=retries))
 
 
 def get_weather_data(city):
-    geocode_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city}"
-    geocode_response = retry_session.get(geocode_url)
-    geocode_response.raise_for_status()
-    geocode_data = geocode_response.json()
+    geocode_url = f"{settings.OPEN_METEO_BASE_URL}?name={city}"
 
-    if not geocode_data['results']:
+    try:
+        geocode_response = cache_session.get(geocode_url)
+        geocode_response.raise_for_status()
+    except requests.RequestException as e:
+        print(f"Error fetching geocode data: {e}")
         return None
 
-    latitude = geocode_data['results'][0]['latitude']
-    longitude = geocode_data['results'][0]['longitude']
+    geocode_data = geocode_response.json()
+
+    if not geocode_data["results"]:
+        return None
+
+    latitude = geocode_data["results"][0]["latitude"]
+    longitude = geocode_data["results"][0]["longitude"]
 
     params = {
         "latitude": latitude,
         "longitude": longitude,
         "hourly": "temperature_2m,precipitation,weathercode",
-        "current_weather": True
+        "current_weather": True,
     }
-
-    response = retry_session.get("https://api.open-meteo.com/v1/forecast",
-                                 params=params)
-    response.raise_for_status()
-    weather_data = response.json()
-
-    if 'current_weather' not in weather_data:
+    try:
+        response = cache_session.get(settings.OPEN_METEO_FORECAST_URL, params=params)
+        response.raise_for_status()
+    except requests.RequestException as e:
+        print(f"Error fetching weather data: {e}")
         return None
 
-    current_weather = weather_data['current_weather']
-    temperature = round(current_weather['temperature'], 1)
-    weather_code = current_weather['weathercode']
+    weather_data = response.json()
+
+    if "current_weather" not in weather_data:
+        return None
+
+    current_weather = weather_data["current_weather"]
+    temperature = round(current_weather["temperature"], 1)
+    weather_code = current_weather["weathercode"]
     weather_description, weather_icon = get_weather_description_and_icon(weather_code)
 
     return {
-        "latitude": weather_data['latitude'],
-        "longitude": weather_data['longitude'],
-        "elevation": weather_data['elevation'],
-        "timezone": weather_data['timezone'],
-        "timezone_abbreviation": weather_data['timezone_abbreviation'],
-        "utc_offset_seconds": weather_data['utc_offset_seconds'],
+        "latitude": weather_data["latitude"],
+        "longitude": weather_data["longitude"],
+        "elevation": weather_data["elevation"],
+        "timezone": weather_data["timezone"],
+        "timezone_abbreviation": weather_data["timezone_abbreviation"],
+        "utc_offset_seconds": weather_data["utc_offset_seconds"],
         "current_temperature": temperature,
         "weather_description": weather_description,
         "weather_icon": weather_icon,
-        "city": city
+        "city": city,
     }
+
 
 def get_weather_description_and_icon(weather_code):
     weather_codes = {
@@ -92,76 +108,94 @@ def get_weather_description_and_icon(weather_code):
         86: ("Snow showers: Heavy", "🌨️"),
         95: ("Thunderstorm: Slight or moderate", "⛈️"),
         96: ("Thunderstorm with slight hail", "⛈️"),
-        99: ("Thunderstorm with heavy hail", "⛈️")
+        99: ("Thunderstorm with heavy hail", "⛈️"),
     }
 
     return weather_codes.get(weather_code, ("Unknown", "❓"))
+
 
 @login_required
 @csrf_exempt
 def weather_view(request):
     form = CityForm(request.POST or None)
 
-    if request.method == 'POST' and form.is_valid():
-        city = form.cleaned_data['city']
-        request.session['last_city'] = city
+    if request.method == "POST" and form.is_valid():
+        city = form.cleaned_data["city"]
+        request.session["last_city"] = city
         weather_data = get_weather_data(city)
         if weather_data is not None:
-            track_search(request, weather_data['current_temperature'])
+            track_search(request, weather_data["current_temperature"])
     else:
-        city = request.GET.get('city', 'Paris')
+        city = request.GET.get("city", "Paris")
         weather_data = get_weather_data(city)
 
     form = CityForm()
 
     if weather_data is None:
-        return render(request, 'error.html', {"message": "City not found"})
+        return render(request, "error.html", {"message": "City not found"})
 
-    recent_cities = CitySearchHistory.objects.filter(user=request.user).order_by('-search_date')[:3]
-    last_city = request.session.get('last_city')
+    recent_cities = CitySearchHistory.objects.filter(user=request.user).order_by(
+        "-search_date"
+    )[:3]
+    last_city = request.session.get("last_city")
 
     if last_city:
         message = f"Do you want to see the weather in {last_city} again?"
     else:
         message = "Enter a city name to see the weather."
 
-    context = {"weather_data": weather_data,
-               "recent_cities": recent_cities,
-               "city": city,
-               "message": message,
-               "last_city": last_city,
-               "form": form,
-               }
+    context = {
+        "weather_data": weather_data,
+        "recent_cities": recent_cities,
+        "city": city,
+        "message": message,
+        "last_city": last_city,
+        "form": form,
+    }
 
-    return render(request, 'weather.html', context)
+    return render(request, "weather.html", context)
 
 
 @login_required
 def track_search(request, temperature):
-    if request.method == 'POST':
-        city = request.POST.get('city')
+    if request.method == "POST":
+        city = request.POST.get("city")
         user = request.user
 
         # Creating a new entry in the search history
-        CitySearchHistory.objects.create(user=user, city=city, temperature=temperature, search_date=timezone.now())
+        CitySearchHistory.objects.create(
+            user=user, city=city, temperature=temperature, search_date=timezone.now()
+        )
 
         # Increment the city search count in Redis
         increment_city_search_count(city)
 
-        return JsonResponse({'status': 'ok'})
-    return JsonResponse({'status': 'error'}, status=400)
+        return JsonResponse({"status": "ok"})
+    return JsonResponse({"status": "error"}, status=400)
+
 
 def search_statistics(request):
-    stats = CitySearchHistory.objects.values('city').annotate(count=Count('city')).order_by('-count')
+    stats = (
+        CitySearchHistory.objects.values("city")
+        .annotate(count=Count("city"))
+        .order_by("-count")
+    )
     return JsonResponse(list(stats), safe=False)
+
 
 @login_required
 def search_history(request):
-    history = CitySearchHistory.objects.filter(user=request.user).order_by('-search_date')
-    return render(request, 'search_history.html', {'history': history})
+    history = CitySearchHistory.objects.filter(user=request.user).order_by(
+        "-search_date"
+    )
+    return render(request, "search_history.html", {"history": history})
+
 
 @login_required
 def city_search_count(request):
     top_cities = get_top_cities()
-    data = [{'city': city.decode('utf-8'), 'search_count': int(count)} for city, count in top_cities]
+    data = [
+        {"city": city.decode("utf-8"), "search_count": int(count)}
+        for city, count in top_cities
+    ]
     return JsonResponse(data, safe=False)

@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('weather', '0002_citysearchhistory_last_searched_and_more'),
+        ("weather", "0002_citysearchhistory_last_searched_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='citysearchhistory',
-            name='temperature',
+            model_name="citysearchhistory",
+            name="temperature",
             field=models.FloatField(default=18.0),
         ),
     ]
