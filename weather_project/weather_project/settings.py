@@ -22,8 +22,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # packages install
-    "rest_framework",
-    "rest_framework_simplejwt",
+    # "rest_framework",
+    # "rest_framework_simplejwt",
 ]
 
 MIDDLEWARE = [
@@ -125,18 +125,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, "weather", "static")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ),
-    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
-}
+# REST_FRAMEWORK = {
+#     "DEFAULT_AUTHENTICATION_CLASSES": (
+#         "rest_framework_simplejwt.authentication.JWTAuthentication",
+#     ),
+#     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+# }
 
 OPEN_METEO_BASE_URL = "https://geocoding-api.open-meteo.com/v1/search"
 OPEN_METEO_FORECAST_URL = "https://api.open-meteo.com/v1/forecast"
-
-print("POSTGRES_DB_HOST:", os.getenv("POSTGRES_DB_HOST"))
-print("POSTGRES_DB_NAME:", os.getenv("POSTGRES_DB_NAME"))
-print("POSTGRES_DB_USER:", os.getenv("POSTGRES_DB_USER"))
-print("POSTGRES_DB_PASSWORD:", os.getenv("POSTGRES_DB_PASSWORD"))
-print("POSTGRES_DB_PORT:", os.getenv("POSTGRES_DB_PORT"))

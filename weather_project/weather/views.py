@@ -36,7 +36,7 @@ def get_weather_data(city):
 
     geocode_data = geocode_response.json()
 
-    if not geocode_data["results"]:
+    if "results" not in geocode_data or not geocode_data["results"]:
         return None
 
     latitude = geocode_data["results"][0]["latitude"]
@@ -125,14 +125,18 @@ def weather_view(request):
         weather_data = get_weather_data(city)
         if weather_data is not None:
             track_search(request, weather_data["current_temperature"])
+        else:
+            error_message = "Введите корректное название города"
+            return render(request, 'error.html', {'message': error_message})
     else:
         city = request.GET.get("city", "Paris")
         weather_data = get_weather_data(city)
 
-    form = CityForm()
-
     if weather_data is None:
-        return render(request, "error.html", {"message": "City not found"})
+        error_message = "Данные о погоде не найдены для данного города."
+        return render(request, 'error.html', {'message': error_message})
+
+    form = CityForm()
 
     recent_cities = CitySearchHistory.objects.filter(user=request.user).order_by(
         "-search_date"
