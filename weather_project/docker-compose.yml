@@ -55,6 +55,8 @@ services:
     hostname: redis
     ports:
       - "6379:6379"
+    volumes:
+      - redis_data:/data
 
   database:
     image: postgres:16.3-alpine
@@ -77,3 +79,4 @@ services:
 volumes:
   static-volume:
   pg_data:
+  redis_data:

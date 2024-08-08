@@ -2,9 +2,12 @@
 {% block title %}Weather{% endblock %}
 {% block content %}
 <div class="weather-card">
-    <h1 class="text-center">Weather in {{ city }}</h1>
+    <h1 class="text-center">
+        {{ city }}
+        <img src="https://hatscripts.github.io/circle-flags/flags/{{ weather_data.country_code|lower }}.svg" width="46" alt="Флаг {{ weather_data.country_code }}">
+    </h1>
     <div class="text-center">
-        <p>Temperature: {{ weather_data.current_temperature }}°C {{ weather_data.weather_icon }}</p>
+        <p><i class="fas fa-temperature-high"></i> Temperature: {{ weather_data.current_temperature }}°C {{ weather_data.weather_icon }}</p>
     </div>
 
     <form method="post" action="/weather/" class="form-inline justify-content-center my-4">
@@ -28,10 +31,10 @@
 
     {% if weather_data %}
     <div class="text-center mt-3">
-        <h2>{{ weather_data.city }}</h2>
-        <p>Temperature: {{ weather_data.current_temperature }}°C</p>
-        <p>Weather: {{ weather_data.weather_description }} {{ weather_data.weather_icon }}</p>
-        <p>Timezone: {{ weather_data.timezone_abbreviation }} ({{ weather_data.timezone }})</p>
+        <p><i class="fas fa-temperature-high"></i> {{ weather_data.current_temperature }}°C   ({{ weather_data.current_apparent_temperature }})</p>
+        <p><i class="fas fa-cloud-sun"></i> {{ weather_data.weather_description }} {{ weather_data.weather_icon }}</p>
+        <p><i class="fas fa-wind"></i> {{ weather_data.current_wind_speed }} m/s   ({{ weather_data.current_wind_gusts }})</p>
+        <p><i class="fas fa-users"></i> {{ weather_data.population }} ч.</p>
     </div>
     {% endif %}
 

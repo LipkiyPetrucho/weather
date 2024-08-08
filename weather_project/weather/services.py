@@ -1,4 +1,5 @@
 import requests
+
 import requests_cache
 from django.conf import settings
 from requests.adapters import HTTPAdapter
@@ -15,7 +16,7 @@ cache_session.mount("https://", HTTPAdapter(max_retries=retries))
 
 
 def get_weather_data(city):
-    geocode_url = f"{settings.OPEN_METEO_BASE_URL}?name={city}"
+    geocode_url = f"{settings.OPEN_METEO_BASE_URL}?name={city}&count=1"
 
     try:
         geocode_response = cache_session.get(geocode_url)
@@ -31,12 +32,16 @@ def get_weather_data(city):
 
     latitude = geocode_data["results"][0]["latitude"]
     longitude = geocode_data["results"][0]["longitude"]
+    population = "{:,}".format(geocode_data["results"][0]["population"])
+    country_code = geocode_data["results"][0]["country_code"]
+    country = geocode_data["results"][0]["country"]
 
     params = {
         "latitude": latitude,
         "longitude": longitude,
-        "hourly": "temperature_2m,precipitation,weathercode",
-        "current_weather": True,
+        "current": ["temperature_2m", "wind_speed_10m", "weather_code",
+                    "apparent_temperature", "wind_gusts_10m"],
+        "wind_speed_unit": "ms"
     }
     try:
         response = cache_session.get(settings.OPEN_METEO_FORECAST_URL, params=params)
@@ -47,12 +52,17 @@ def get_weather_data(city):
 
     weather_data = response.json()
 
-    if "current_weather" not in weather_data:
+    if "current" not in weather_data:
+        print(f"Error fetching weather data")
         return None
 
-    current_weather = weather_data["current_weather"]
-    temperature = round(current_weather["temperature"], 1)
-    weather_code = current_weather["weathercode"]
+    current_weather = weather_data["current"]
+    temperature = current_weather["temperature_2m"]
+    wind_speed = current_weather["wind_speed_10m"]
+    weather_code = current_weather["weather_code"]
+    apparent_temperature = current_weather["apparent_temperature"]
+    wind_gusts_10m = current_weather["wind_gusts_10m"]
+
     weather_description, weather_icon = get_weather_description_and_icon(weather_code)
 
     return {
@@ -63,9 +73,15 @@ def get_weather_data(city):
         "timezone_abbreviation": weather_data["timezone_abbreviation"],
         "utc_offset_seconds": weather_data["utc_offset_seconds"],
         "current_temperature": temperature,
+        "current_apparent_temperature": apparent_temperature,
+        "current_wind_speed": wind_speed,
+        "current_wind_gusts": wind_gusts_10m,
         "weather_description": weather_description,
         "weather_icon": weather_icon,
         "city": city,
+        "population": population,
+        "country_code": country_code,
+        "country": country,
     }
 
 
