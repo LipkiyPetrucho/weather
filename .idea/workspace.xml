@@ -4,15 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="changed access level DEFAULT_PERMISSION_CLASSES from AllowAny">
-      <change afterPath="$PROJECT_DIR$/weather_project/weather/api/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weather_project/weather/api/serializers.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weather_project/weather/api/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/weather_project/weather/api/views.py" afterDir="false" />
+    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="Project structure has been improved. Separation of the code into processing of external APIs and providing data via APIs.">
+      <change afterPath="$PROJECT_DIR$/weather_project/weather/services.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/.cache.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/.cache.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/serializers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/api/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/api/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/api/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/api/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/api/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/api/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/api/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/tests.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather_project/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather_project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather_project/urls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -254,7 +255,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723114809970</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Project structure has been improved. Separation of the code into processing of external APIs and providing data via APIs.">
+      <option name="closed" value="true" />
+      <created>1723116137911</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1723116137911</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -279,6 +288,7 @@
     <MESSAGE value="Added error page when entering an invalid city name" />
     <MESSAGE value="integrated Django Rest Framework to manage user search history and provide an API to display search query statistics." />
     <MESSAGE value="changed access level DEFAULT_PERMISSION_CLASSES from AllowAny" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed access level DEFAULT_PERMISSION_CLASSES from AllowAny" />
+    <MESSAGE value="Project structure has been improved. Separation of the code into processing of external APIs and providing data via APIs." />
+    <option name="LAST_COMMIT_MESSAGE" value="Project structure has been improved. Separation of the code into processing of external APIs and providing data via APIs." />
   </component>
 </project>

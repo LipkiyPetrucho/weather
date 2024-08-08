@@ -125,11 +125,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "weather", "static")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # rest_framework
-REST_FRAMEWORK = {
- 'DEFAULT_PERMISSION_CLASSES': [
-     'rest_framework.permissions.AllowAny'
- ]
-}
+REST_FRAMEWORK = {"DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"]}
 
 OPEN_METEO_BASE_URL = "https://geocoding-api.open-meteo.com/v1/search"
 OPEN_METEO_FORECAST_URL = "https://api.open-meteo.com/v1/forecast"
