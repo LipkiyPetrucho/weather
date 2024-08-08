@@ -6,7 +6,7 @@ from weather.models import CitySearchHistory
 class CitySearchHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = CitySearchHistory
-        fields = ['user', 'city', 'temperature', 'search_date']
+        fields = '__all__'
 
 class CitySearchStatsSerializer(serializers.Serializer):
     city = serializers.CharField()

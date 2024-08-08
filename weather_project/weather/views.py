@@ -8,15 +8,11 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework import viewsets
-from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
-from rest_framework.response import Response
 from urllib3 import Retry
 
 from weather.forms import CityForm
 from weather.models import CitySearchHistory
 from weather.redis_helper import increment_city_search_count, get_top_cities
-from weather.serializers import CitySearchHistorySerializer, CitySearchStatsSerializer
 
 # Configuring Open-Meteo API client with cache and repeated requests mechanism.
 cache_session = requests_cache.CachedSession(".cache", expire_after=3600)
@@ -193,16 +189,3 @@ def city_search_count(request):
         for city, count in top_cities
     ]
     return JsonResponse(data, safe=False)
-
-class CitySearchHistoryViewSet(viewsets.ModelViewSet):
-    queryset = CitySearchHistory.objects.all()
-    serializer_class = CitySearchHistorySerializer
-
-class CitySearchCountViewSet(viewsets.ViewSet):
-    queryset = CitySearchHistory.objects.all()
-    serializer_class = CitySearchStatsSerializer
-
-    def list(self, request):
-        stats = self.queryset.values('city').annotate(count=Count('city')).order_by('-count')
-        serializer = self.serializer_class(stats, many=True)
-        return Response(serializer.data)
