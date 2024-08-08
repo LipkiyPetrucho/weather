@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="added .gitignore, readme.md, ndnix, .env&#10;replaced requests-retry library with requests&#10;replaced database with PostgreSQL&#10;implemented poetry instead of requirements.txt&#10;statics collection in a separate container instead of creating an image">
+    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="Added error page when entering an invalid city name">
+      <change afterPath="$PROJECT_DIR$/weather_project/weather/serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/.cache.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/.cache.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/init.sh" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/init.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/templates/error.html" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/templates/error.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather_project/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather_project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather_project/urls.py" afterDir="false" />
@@ -59,7 +60,7 @@
     "git-widget-placeholder": "day-7",
     "ignore.virus.scanning.warn.message": "true",
     "ignore_missing_gitignore": "true",
-    "last_opened_file_path": "D:/django/django_sdk_weather_api-main",
+    "last_opened_file_path": "D:/django/GymUp",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
@@ -228,7 +229,15 @@
       <option name="project" value="LOCAL" />
       <updated>1722335385991</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Added error page when entering an invalid city name">
+      <option name="closed" value="true" />
+      <created>1723051581063</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1723051581063</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -250,6 +259,7 @@
     <MESSAGE value="minor code changes" />
     <MESSAGE value="implemented Redis to calculate the number of requests by city" />
     <MESSAGE value="added variables for correct operation of Redis" />
-    <option name="LAST_COMMIT_MESSAGE" value="added variables for correct operation of Redis" />
+    <MESSAGE value="Added error page when entering an invalid city name" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added error page when entering an invalid city name" />
   </component>
 </project>

@@ -22,8 +22,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # packages install
-    # "rest_framework",
-    # "rest_framework_simplejwt",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -125,12 +124,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, "weather", "static")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# REST_FRAMEWORK = {
-#     "DEFAULT_AUTHENTICATION_CLASSES": (
-#         "rest_framework_simplejwt.authentication.JWTAuthentication",
-#     ),
-#     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
-# }
+# rest_framework
+REST_FRAMEWORK = {
+ 'DEFAULT_PERMISSION_CLASSES': [
+     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+ ]
+}
 
 OPEN_METEO_BASE_URL = "https://geocoding-api.open-meteo.com/v1/search"
 OPEN_METEO_FORECAST_URL = "https://api.open-meteo.com/v1/forecast"

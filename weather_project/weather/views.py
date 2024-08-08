@@ -8,11 +8,15 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework import viewsets
+from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
+from rest_framework.response import Response
 from urllib3 import Retry
 
 from weather.forms import CityForm
 from weather.models import CitySearchHistory
 from weather.redis_helper import increment_city_search_count, get_top_cities
+from weather.serializers import CitySearchHistorySerializer, CitySearchStatsSerializer
 
 # Configuring Open-Meteo API client with cache and repeated requests mechanism.
 cache_session = requests_cache.CachedSession(".cache", expire_after=3600)
@@ -124,7 +128,13 @@ def weather_view(request):
         request.session["last_city"] = city
         weather_data = get_weather_data(city)
         if weather_data is not None:
-            track_search(request, weather_data["current_temperature"])
+            CitySearchHistory.objects.create(
+                user=request.user,
+                city=city,
+                temperature=weather_data["current_temperature"],
+                search_date=timezone.now()
+            )
+            increment_city_search_count(city)
         else:
             error_message = "Введите корректное название города"
             return render(request, 'error.html', {'message': error_message})
@@ -138,9 +148,7 @@ def weather_view(request):
 
     form = CityForm()
 
-    recent_cities = CitySearchHistory.objects.filter(user=request.user).order_by(
-        "-search_date"
-    )[:3]
+    recent_cities = CitySearchHistory.objects.filter(user=request.user).order_by("-search_date")[:3]
     last_city = request.session.get("last_city")
 
     if last_city:
@@ -158,24 +166,6 @@ def weather_view(request):
     }
 
     return render(request, "weather.html", context)
-
-
-@login_required
-def track_search(request, temperature):
-    if request.method == "POST":
-        city = request.POST.get("city")
-        user = request.user
-
-        # Creating a new entry in the search history
-        CitySearchHistory.objects.create(
-            user=user, city=city, temperature=temperature, search_date=timezone.now()
-        )
-
-        # Increment the city search count in Redis
-        increment_city_search_count(city)
-
-        return JsonResponse({"status": "ok"})
-    return JsonResponse({"status": "error"}, status=400)
 
 
 def search_statistics(request):
@@ -203,3 +193,17 @@ def city_search_count(request):
         for city, count in top_cities
     ]
     return JsonResponse(data, safe=False)
+
+class CitySearchHistoryViewSet(viewsets.ModelViewSet):
+    queryset = CitySearchHistory.objects.all()
+    serializer_class = CitySearchHistorySerializer
+
+class CitySearchCountViewSet(viewsets.ViewSet):
+    queryset = CitySearchHistory.objects.all()
+    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+    serializer_class = CitySearchStatsSerializer
+
+    def list(self, request):
+        stats = self.queryset.values('city').annotate(count=Count('city')).order_by('-count')
+        serializer = self.serializer_class(stats, many=True)
+        return Response(serializer.data)
