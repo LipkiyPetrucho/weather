@@ -200,7 +200,6 @@ class CitySearchHistoryViewSet(viewsets.ModelViewSet):
 
 class CitySearchCountViewSet(viewsets.ViewSet):
     queryset = CitySearchHistory.objects.all()
-    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
     serializer_class = CitySearchStatsSerializer
 
     def list(self, request):
