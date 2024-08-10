@@ -1,34 +1,34 @@
-$(function() {
-    var token = "deb5c7c3f11a7c507c9b555a43ee9a58c493c8b8";
-
-    function formatResult(value, currentValue, suggestion, options) {
-        var newValue = suggestion.data.city;
-        suggestion.value = newValue;
-        return $.Suggestions.prototype.formatResult.call(this, newValue, currentValue, suggestion, options);
-    }
-
-    function formatSelected(suggestion) {
-        return suggestion.data.city;
-    }
-
-    $("#id_city").suggestions({
-        token: token,
-        type: "ADDRESS",
-        hint: false,
-        bounds: "city",
-        language: "en",
-        geoLocation: false,
-        enrichmentEnabled: false,
-        constraints: {
-            locations: { country: "*" }
-        },
-        formatResult: formatResult,
-        formatSelected: formatSelected,
-        onSelect: function(suggestion) {
-            console.log(suggestion);
-        }
-    });
-});
+//$(function() {
+//    var token = "deb5c7c3f11a7c507c9b555a43ee9a58c493c8b8";
+//
+//    function formatResult(value, currentValue, suggestion, options) {
+//        var newValue = suggestion.data.city;
+//        suggestion.value = newValue;
+//        return $.Suggestions.prototype.formatResult.call(this, newValue, currentValue, suggestion, options);
+//    }
+//
+//    function formatSelected(suggestion) {
+//        return suggestion.data.city;
+//    }
+//
+//    $("#id_city").suggestions({
+//        token: token,
+//        type: "ADDRESS",
+//        hint: false,
+//        bounds: "city",
+//        language: "en",
+//        geoLocation: false,
+//        enrichmentEnabled: false,
+//        constraints: {
+//            locations: { country: "*" }
+//        },
+//        formatResult: formatResult,
+//        formatSelected: formatSelected,
+//        onSelect: function(suggestion) {
+//            console.log(suggestion);
+//        }
+//    });
+//});
 
 function getWeatherForLastCity(button) {
     const city = button.getAttribute('data-last-city');
@@ -52,6 +52,7 @@ function getWeatherForLastCity(button) {
     form.submit();
 }
 
+//получение статистики по числу поисков городов
 function fetchCitySearchCounts() {
     $.ajax({
         url: "{% url 'city_search_count' %}",
@@ -65,3 +66,73 @@ function fetchCitySearchCounts() {
         }
     });
 }
+
+//GeoNames
+$(document).ready(function() {
+    $('#id_city').on('input', function() {
+        let query = $(this).val();
+
+        // Проверка, что введённый текст не пустой
+        if (query.length < 2) {
+            $('#suggestions').empty();
+            return;
+        }
+
+        // Определяем язык
+        let lang = 'en';
+        if (/[а-яА-ЯЁё]/.test(query)) {
+        lang = 'ru';
+        }
+
+        // Показать индикацию загрузки
+        $('#suggestions').html('<div class="loading">Загрузка...</div>');
+
+        // AJAX запрос к GeoNames API
+        $.ajax({
+            url: 'http://api.geonames.org/search',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                q: query,
+                maxRows: 10, // кол-во результатов
+                username: 'petr_lip',
+                type: 'json',
+                lang: lang,
+            },
+            success: function(data) {
+                $('#suggestions').empty();
+
+                // Функция для создания текста подсказки
+                function createSuggestionText(cityData) {
+                    const cityName = cityData.name;
+                    const countryName = cityData.country || '';  // Если country отсутствует, добавляется пустая строка
+
+                    // Склеиваем название города и страны, если страна доступна
+                    return countryName ? `${cityName}, ${countryName}` : cityName;
+                }
+
+                // Отображение подсказок
+                if (data.geonames && data.geonames.length > 0) {
+                    // Сохранение данных в localStorage
+                    localStorage.setItem('lastSearchResults', JSON.stringify(data.geonames));
+
+                    data.geonames.forEach(function(city) {
+                        const suggestionText = createSuggestionText(city);
+                        $('#suggestions').append(`<div class="suggestion" data-name="${city.name}">${suggestionText}</div>`);
+                    });
+
+
+                    // Обработка клика по подсказке
+                    $('.suggestion').on('click', function() {
+                        $('#id_city').val($(this).data('name'));
+                        $('#suggestions').empty();
+                    });
+                }
+            },
+            error: function() {
+                $('#suggestions').text('Ошибка запроса');
+            }
+        });
+    });
+});
+

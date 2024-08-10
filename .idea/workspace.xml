@@ -4,15 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="views related to external APIs moved to services.py">
+    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="Added country flags, parameter icons, wind speed, wind gusts and apparent temperature">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/.cache.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/.cache.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/.dockerignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/services.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/services.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/templates/error.html" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/templates/error.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/static/css/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/static/js/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/static/js/scripts.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/templates/weather.html" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/templates/weather.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="add-redis" />
+        <entry key="$PROJECT_DIR$" value="day-8" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -57,7 +57,7 @@
     "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "day-7",
+    "git-widget-placeholder": "day-9",
     "ignore.virus.scanning.warn.message": "true",
     "ignore_missing_gitignore": "true",
     "last_opened_file_path": "D:/django/GymUp",
@@ -269,7 +269,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723118395634</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Added country flags, parameter icons, wind speed, wind gusts and apparent temperature">
+      <option name="closed" value="true" />
+      <created>1723159317473</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1723159317473</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -296,6 +304,7 @@
     <MESSAGE value="changed access level DEFAULT_PERMISSION_CLASSES from AllowAny" />
     <MESSAGE value="Project structure has been improved. Separation of the code into processing of external APIs and providing data via APIs." />
     <MESSAGE value="views related to external APIs moved to services.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="views related to external APIs moved to services.py" />
+    <MESSAGE value="Added country flags, parameter icons, wind speed, wind gusts and apparent temperature" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added country flags, parameter icons, wind speed, wind gusts and apparent temperature" />
   </component>
 </project>

@@ -16,7 +16,8 @@ cache_session.mount("https://", HTTPAdapter(max_retries=retries))
 
 
 def get_weather_data(city):
-    geocode_url = f"{settings.OPEN_METEO_BASE_URL}?name={city}&count=1"
+    language = detect_language(city)
+    geocode_url = f"{settings.OPEN_METEO_BASE_URL}?name={city}&count=1&language={language}"
 
     try:
         geocode_response = cache_session.get(geocode_url)
@@ -118,3 +119,9 @@ def get_weather_description_and_icon(weather_code):
     }
 
     return weather_codes.get(weather_code, ("Unknown", "❓"))
+
+def detect_language(city):
+    if any("а" <= char <= "я" or "А" <= char <= "Я" for char in city):
+        return "ru"
+    else:
+        return "en"

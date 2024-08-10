@@ -1,7 +1,6 @@
 from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 
@@ -11,7 +10,6 @@ from weather.redis_helper import increment_city_search_count, get_top_cities
 from weather.services import get_weather_data
 
 
-@login_required
 @csrf_exempt
 def weather_view(request):
     form = CityForm(request.POST or None)
@@ -29,7 +27,7 @@ def weather_view(request):
             )
             increment_city_search_count(city)
         else:
-            error_message = "Введите корректное название города"
+            error_message = "Не удалось найти данные о погоде для введенного города. Проверьте правильность написания."
             return render(request, "error.html", {"message": error_message})
     else:
         city = request.GET.get("city", "Paris")
@@ -43,7 +41,7 @@ def weather_view(request):
 
     recent_cities = CitySearchHistory.objects.filter(user=request.user).order_by(
         "-search_date"
-    )[:3]
+    )[:5]
     last_city = request.session.get("last_city")
 
     if last_city:
@@ -63,16 +61,6 @@ def weather_view(request):
     return render(request, "weather.html", context)
 
 
-def search_statistics(request):
-    stats = (
-        CitySearchHistory.objects.values("city")
-        .annotate(count=Count("city"))
-        .order_by("-count")
-    )
-    return JsonResponse(list(stats), safe=False)
-
-
-@login_required
 def search_history(request):
     history = CitySearchHistory.objects.filter(user=request.user).order_by(
         "-search_date"
@@ -80,7 +68,6 @@ def search_history(request):
     return render(request, "search_history.html", {"history": history})
 
 
-@login_required
 def city_search_count(request):
     top_cities = get_top_cities()
     data = [
