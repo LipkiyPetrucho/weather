@@ -4,21 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="Improved tooltips when entering a city name. The Dadata service plugin has been replaced by the GeoName service plugin.">
+    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="Removed redundancy from the project.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/.cache.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/.cache.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/api/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/redis_helper.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/migrations/0002_citysearchhistory_last_searched_and_more.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/migrations/0003_citysearchhistory_temperature.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/migrations/0004_remove_citysearchhistory_search_count.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/services.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/services.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/static/js/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/static/js/scripts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/templates/city_search_count.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/templates/search_history.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/templates/weather.html" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/templates/weather.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="day-8" />
+        <entry key="$PROJECT_DIR$" value="day-9" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -63,7 +57,7 @@
     "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "day-9",
+    "git-widget-placeholder": "day-10",
     "ignore.virus.scanning.warn.message": "true",
     "ignore_missing_gitignore": "true",
     "last_opened_file_path": "D:/django/GymUp",
@@ -291,7 +285,23 @@
       <option name="project" value="LOCAL" />
       <updated>1723297503303</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Removed redundancy from the project.">
+      <option name="closed" value="true" />
+      <created>1723322508738</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1723322508738</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Removed redundancy from the project.">
+      <option name="closed" value="true" />
+      <created>1723323082515</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1723323082515</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -320,6 +330,7 @@
     <MESSAGE value="views related to external APIs moved to services.py" />
     <MESSAGE value="Added country flags, parameter icons, wind speed, wind gusts and apparent temperature" />
     <MESSAGE value="Improved tooltips when entering a city name. The Dadata service plugin has been replaced by the GeoName service plugin." />
-    <option name="LAST_COMMIT_MESSAGE" value="Improved tooltips when entering a city name. The Dadata service plugin has been replaced by the GeoName service plugin." />
+    <MESSAGE value="Removed redundancy from the project." />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed redundancy from the project." />
   </component>
 </project>

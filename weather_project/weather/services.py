@@ -6,7 +6,6 @@ from django.http import JsonResponse
 from requests.adapters import HTTPAdapter
 from urllib3 import Retry
 
-# Configuring Open-Meteo API client with cache and repeated requests mechanism.
 cache_session = requests_cache.CachedSession(".cache", expire_after=3600)
 retries = Retry(
     total=5,
