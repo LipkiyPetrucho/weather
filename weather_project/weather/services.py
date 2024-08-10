@@ -31,6 +31,9 @@ def get_weather_data(city):
 
     geocode_data = geocode_response.json()
 
+    if "results" not in geocode_data or not geocode_data["results"]:
+        return None
+
     latitude = geocode_data["results"][0]["latitude"]
     longitude = geocode_data["results"][0]["longitude"]
     population = "{:,}".format(geocode_data["results"][0]["population"])

@@ -1,42 +1,28 @@
-from django.contrib.auth.models import User
 from django.test import TestCase
-from rest_framework.test import APIClient
+
+from django.urls import reverse
+from django.contrib.auth.models import User
+
 from weather.models import CitySearchHistory
 
-class CitySearchHistoryViewSetTestCase(TestCase):
+
+class WeatherViewTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password='testpass')
-        self.client = APIClient()
-        self.client.force_authenticate(user=self.user)
-        self.city_data = {'city': 'Paris', 'user': self.user.id, 'temperature': 20.0}
+        self.client = self.client_class()
+        self.client.login(username='testuser', password='testpass')
 
-    def test_create_city_search_history(self):
-        response = self.client.post('/api/citysearchhistory/', self.city_data)
-        self.assertEqual(response.status_code, 201)
-        self.assertEqual(CitySearchHistory.objects.count(), 1)
-
-    def test_list_city_search_history(self):
-        CitySearchHistory.objects.create(user=self.user, city='Paris', temperature=20.0)
-        response = self.client.get('/api/citysearchhistory/')
+    def test_get_weather_view(self):
+        response = self.client.get(reverse('weather_view'))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 1)
+        self.assertContains(response, "Enter a city name to see the weather.")
 
-    def test_retrieve_city_search_history(self):
-        city_search = CitySearchHistory.objects.create(user=self.user, city='Paris', temperature=20.0)
-        response = self.client.get(f'/api/citysearchhistory/{city_search.id}/')
+    def test_post_weather_view(self):
+        response = self.client.post(reverse('weather_view'), {'city': 'Paris'})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data['city'], 'Paris')
+        self.assertTrue(CitySearchHistory.objects.filter(city='Paris').exists())
 
-    def test_update_city_search_history(self):
-        city_search = CitySearchHistory.objects.create(user=self.user, city='Paris', temperature=20.0)
-        updated_data = {'city': 'London', 'temperature': 15.0}
-        response = self.client.put(f'/api/citysearchhistory/{city_search.id}/', updated_data)
+    def test_weather_view_invalid_city(self):
+        response = self.client.post(reverse('weather_view'), {'city': 'InvalidCity'})
         self.assertEqual(response.status_code, 200)
-        city_search.refresh_from_db()
-        self.assertEqual(city_search.city, 'London')
-
-    def test_delete_city_search_history(self):
-        city_search = CitySearchHistory.objects.create(user=self.user, city='Paris', temperature=20.0)
-        response = self.client.delete(f'/api/citysearchhistory/{city_search.id}/')
-        self.assertEqual(response.status_code, 204)
-        self.assertEqual(CitySearchHistory.objects.count(), 0)
+        self.assertContains(response, "Не удалось найти данные о погоде для введенного города.")
