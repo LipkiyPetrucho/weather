@@ -1,35 +1,4 @@
-//$(function() {
-//    var token = "deb5c7c3f11a7c507c9b555a43ee9a58c493c8b8";
-//
-//    function formatResult(value, currentValue, suggestion, options) {
-//        var newValue = suggestion.data.city;
-//        suggestion.value = newValue;
-//        return $.Suggestions.prototype.formatResult.call(this, newValue, currentValue, suggestion, options);
-//    }
-//
-//    function formatSelected(suggestion) {
-//        return suggestion.data.city;
-//    }
-//
-//    $("#id_city").suggestions({
-//        token: token,
-//        type: "ADDRESS",
-//        hint: false,
-//        bounds: "city",
-//        language: "en",
-//        geoLocation: false,
-//        enrichmentEnabled: false,
-//        constraints: {
-//            locations: { country: "*" }
-//        },
-//        formatResult: formatResult,
-//        formatSelected: formatSelected,
-//        onSelect: function(suggestion) {
-//            console.log(suggestion);
-//        }
-//    });
-//});
-
+// Repeated request for the weather of the last city
 function getWeatherForLastCity(button) {
     const city = button.getAttribute('data-last-city');
     const form = document.createElement('form');
@@ -52,20 +21,6 @@ function getWeatherForLastCity(button) {
     form.submit();
 }
 
-//получение статистики по числу поисков городов
-function fetchCitySearchCounts() {
-    $.ajax({
-        url: "{% url 'city_search_count' %}",
-        method: "GET",
-        success: function(data) {
-            const countsDiv = document.getElementById('city-search-counts');
-            countsDiv.innerHTML = '<ul>' + data.map(item => `<li>${item.city}: ${item.search_count}</li>`).join('') + '</ul>';
-        },
-        error: function(error) {
-            console.error("Error fetching city search counts:", error);
-        }
-    });
-}
 
 //GeoNames
 $(document).ready(function() {
@@ -94,7 +49,7 @@ $(document).ready(function() {
             dataType: 'json',
             data: {
                 q: query,
-                maxRows: 10, // кол-во результатов
+                maxRows: 6, // кол-во результатов
                 username: 'petr_lip',
                 type: 'json',
                 lang: lang,

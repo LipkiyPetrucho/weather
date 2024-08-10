@@ -4,13 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="Added country flags, parameter icons, wind speed, wind gusts and apparent temperature">
+    <list default="true" id="4bd547ac-1ed1-422b-8a8d-f96844d9b8aa" name="Changes" comment="Improved tooltips when entering a city name. The Dadata service plugin has been replaced by the GeoName service plugin.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/.cache.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/.cache.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/api/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/redis_helper.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/services.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/services.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/weather_project/weather/static/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/static/css/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/static/js/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/static/js/scripts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/templates/city_search_count.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/templates/search_history.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/templates/weather.html" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/templates/weather.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weather_project/weather/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/tests.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/weather_project/weather/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/weather_project/weather/views.py" afterDir="false" />
     </list>
@@ -277,7 +283,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723159317473</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Improved tooltips when entering a city name. The Dadata service plugin has been replaced by the GeoName service plugin.">
+      <option name="closed" value="true" />
+      <created>1723297503303</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1723297503303</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -305,6 +319,7 @@
     <MESSAGE value="Project structure has been improved. Separation of the code into processing of external APIs and providing data via APIs." />
     <MESSAGE value="views related to external APIs moved to services.py" />
     <MESSAGE value="Added country flags, parameter icons, wind speed, wind gusts and apparent temperature" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added country flags, parameter icons, wind speed, wind gusts and apparent temperature" />
+    <MESSAGE value="Improved tooltips when entering a city name. The Dadata service plugin has been replaced by the GeoName service plugin." />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved tooltips when entering a city name. The Dadata service plugin has been replaced by the GeoName service plugin." />
   </component>
 </project>

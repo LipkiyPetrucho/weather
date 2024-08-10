@@ -1,12 +1,9 @@
-from django.db.models import Count
-from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 
 from weather.forms import CityForm
 from weather.models import CitySearchHistory
-from weather.redis_helper import increment_city_search_count, get_top_cities
 from weather.services import get_weather_data
 
 
@@ -25,7 +22,6 @@ def weather_view(request):
                 temperature=weather_data["current_temperature"],
                 search_date=timezone.now(),
             )
-            increment_city_search_count(city)
         else:
             error_message = "Не удалось найти данные о погоде для введенного города. Проверьте правильность написания."
             return render(request, "error.html", {"message": error_message})
@@ -59,19 +55,3 @@ def weather_view(request):
     }
 
     return render(request, "weather.html", context)
-
-
-def search_history(request):
-    history = CitySearchHistory.objects.filter(user=request.user).order_by(
-        "-search_date"
-    )
-    return render(request, "search_history.html", {"history": history})
-
-
-def city_search_count(request):
-    top_cities = get_top_cities()
-    data = [
-        {"city": city.decode("utf-8"), "search_count": int(count)}
-        for city, count in top_cities
-    ]
-    return JsonResponse(data, safe=False)

@@ -2,6 +2,7 @@ import requests
 
 import requests_cache
 from django.conf import settings
+from django.http import JsonResponse
 from requests.adapters import HTTPAdapter
 from urllib3 import Retry
 
@@ -17,19 +18,19 @@ cache_session.mount("https://", HTTPAdapter(max_retries=retries))
 
 def get_weather_data(city):
     language = detect_language(city)
-    geocode_url = f"{settings.OPEN_METEO_BASE_URL}?name={city}&count=1&language={language}"
+    geocode_url = (
+        f"{settings.OPEN_METEO_BASE_URL}?name={city}&count=1&language={language}"
+    )
 
     try:
         geocode_response = cache_session.get(geocode_url)
         geocode_response.raise_for_status()
     except requests.RequestException as e:
-        print(f"Error fetching geocode data: {e}")
-        return None
+        return JsonResponse(
+            {"error": "Не удалось получить данные о городе."}, status=500
+        )
 
     geocode_data = geocode_response.json()
-
-    if "results" not in geocode_data or not geocode_data["results"]:
-        return None
 
     latitude = geocode_data["results"][0]["latitude"]
     longitude = geocode_data["results"][0]["longitude"]
@@ -40,22 +41,24 @@ def get_weather_data(city):
     params = {
         "latitude": latitude,
         "longitude": longitude,
-        "current": ["temperature_2m", "wind_speed_10m", "weather_code",
-                    "apparent_temperature", "wind_gusts_10m"],
-        "wind_speed_unit": "ms"
+        "current": [
+            "temperature_2m",
+            "wind_speed_10m",
+            "weather_code",
+            "apparent_temperature",
+            "wind_gusts_10m",
+        ],
+        "wind_speed_unit": "ms",
     }
     try:
         response = cache_session.get(settings.OPEN_METEO_FORECAST_URL, params=params)
         response.raise_for_status()
     except requests.RequestException as e:
-        print(f"Error fetching weather data: {e}")
-        return None
+        return JsonResponse(
+            {"error": "Не удалось получить данные о погоде."}, status=500
+        )
 
     weather_data = response.json()
-
-    if "current" not in weather_data:
-        print(f"Error fetching weather data")
-        return None
 
     current_weather = weather_data["current"]
     temperature = current_weather["temperature_2m"]
@@ -119,6 +122,7 @@ def get_weather_description_and_icon(weather_code):
     }
 
     return weather_codes.get(weather_code, ("Unknown", "❓"))
+
 
 def detect_language(city):
     if any("а" <= char <= "я" or "А" <= char <= "Я" for char in city):
