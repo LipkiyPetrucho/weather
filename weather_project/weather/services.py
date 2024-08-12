@@ -2,7 +2,6 @@ import requests
 
 import requests_cache
 from django.conf import settings
-from django.http import JsonResponse
 from requests.adapters import HTTPAdapter
 from urllib3 import Retry
 
@@ -24,10 +23,8 @@ def get_weather_data(city):
     try:
         geocode_response = cache_session.get(geocode_url)
         geocode_response.raise_for_status()
-    except requests.RequestException as e:
-        return JsonResponse(
-            {"error": "Не удалось получить данные о городе."}, status=500
-        )
+    except requests.RequestException:
+        return None
 
     geocode_data = geocode_response.json()
 
@@ -55,10 +52,8 @@ def get_weather_data(city):
     try:
         response = cache_session.get(settings.OPEN_METEO_FORECAST_URL, params=params)
         response.raise_for_status()
-    except requests.RequestException as e:
-        return JsonResponse(
-            {"error": "Не удалось получить данные о погоде."}, status=500
-        )
+    except requests.RequestException:
+        return None
 
     weather_data = response.json()
 

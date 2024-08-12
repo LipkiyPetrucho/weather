@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     replaces = [
         ("weather", "0001_initial"),
         ("weather", "0002_citysearchhistory_last_searched_and_more"),
