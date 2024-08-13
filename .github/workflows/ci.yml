@@ -1,0 +1,70 @@
+name: Django CI/CD
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      database:
+        image: postgres:16.3-alpine
+        env:
+          POSTGRES_DB: ${{ variables.POSTGRES_DB }}
+          POSTGRES_USER: ${{ variables.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U db_user -d db_weather"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install poetry
+          poetry config virtualenvs.create false \
+          poetry install --no-interaction --no-root
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build and run Docker containers
+        run: |
+          docker-compose up -d --build
+        env:
+          POSTGRES_DB: ${{ variables.POSTGRES_DB }}
+          POSTGRES_USER: ${{ variables.POSTGRES_USER }}
+          POSTGRES_DB_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DEBUG: true
+          ALLOWED_HOSTS: localhost,0.0.0.0,127.0.0.1
+
+      - name: Run database migrations
+        run: |
+          docker-compose exec web python manage.py migrate
+
+      - name: Run linters
+        run: |
+          docker-compose exec web black --check .
+          docker-compose exec web flake8 .
+
+      - name: Run tests
+        run: |
+          docker-compose exec web pytest
+
+      - name: Tear down Docker containers
+        if: always()
+        run: |
+          docker-compose down
+

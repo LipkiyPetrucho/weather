@@ -29,7 +29,6 @@ services:
 #      python3 manage.py runserver 0.0.0.0:8000"
     depends_on:
       - database
-      - redis
     environment:
       - DEBUG=${DEBUG}
       - SECRET_KEY=${SECRET_KEY}
@@ -49,14 +48,6 @@ services:
     restart: always
     environment:
       - PYTHONUNBUFFERED=${PYTHONUNBUFFERED}
-
-  redis:
-    image: redis:latest
-    hostname: redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
 
   database:
     image: postgres:16.3-alpine
@@ -79,4 +70,3 @@ services:
 volumes:
   static-volume:
   pg_data:
-  redis_data:

@@ -4,7 +4,7 @@ version = "0.2.0"
 description = "a site where the user enters the name of a city and receives a weather forecast for that city for the near future"
 authors = ["Petr <bang1987@mail.ru>"]
 readme = "README.md"
-repository = "https://github.com/LipkiyPetrucho/weather/tree/add-redis"
+repository = "https://github.com/LipkiyPetrucho/weather/"
 
 [tool.poetry.dependencies]
 python = "^3.12"
@@ -23,7 +23,6 @@ requests = "2.32.3"
 requests-cache = "1.2.1"
 retry-requests = "2.0.0"
 pytz = "2024.1"
-redis = "4.3.4"
 certifi = "2024.7.4"
 attrs = "23.2.0"
 async-timeout = "4.0.3"
