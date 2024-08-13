@@ -10,8 +10,8 @@ jobs:
       database:
         image: postgres:16.3-alpine
         env:
-          POSTGRES_DB: ${{ variables.POSTGRES_DB }}
-          POSTGRES_USER: ${{ variables.POSTGRES_USER }}
+          POSTGRES_DB: db_weather
+          POSTGRES_USER: db_user
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         ports:
           - 5432:5432
@@ -43,8 +43,8 @@ jobs:
         run: |
           docker-compose up -d --build
         env:
-          POSTGRES_DB: ${{ variables.POSTGRES_DB }}
-          POSTGRES_USER: ${{ variables.POSTGRES_USER }}
+          POSTGRES_DB: db_weather
+          POSTGRES_USER: db_user
           POSTGRES_DB_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           DEBUG: true
