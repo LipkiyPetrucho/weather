@@ -39,7 +39,7 @@ jobs:
           pip install --no-cache-dir poetry
           poetry config virtualenvs.create false
           poetry install --no-interaction
-          working-directory: weather/weather_project
+          working-directory: weather_project
 
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
