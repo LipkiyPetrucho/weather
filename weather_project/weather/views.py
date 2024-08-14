@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
@@ -6,7 +7,7 @@ from weather.forms import CityForm
 from weather.models import CitySearchHistory
 from weather.services import get_weather_data
 
-
+@login_required
 @csrf_exempt
 def weather_view(request):
     form = CityForm(request.POST or None)

@@ -30,15 +30,9 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Upgrade pip and setuptools
+      - name: Install dependencies
         run: |
-          pip install --upgrade pip setuptools
-
-      - name: Install Poetry
-        run: pip install --no-cache-dir poetry
-
-      - name: Configure and install dependencies
-        run: |
+          pip install --no-cache-dir poetry
           poetry config virtualenvs.create false
           poetry install --no-interaction
         working-directory: weather_project
