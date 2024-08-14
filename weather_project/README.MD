@@ -34,7 +34,7 @@
     pip install -r requirements.txt
     ```
 <details>
-<summary>Прописать переменные окружения в файле `.env.sample`</summary>
+<summary>Прописать переменные окружения в файле `.env.sample`. Необходимо переименовать `.env.sample` в `.env`! </summary>
    
 ```dotenv
 SECRET_KEY='Секретный ключ Django'
