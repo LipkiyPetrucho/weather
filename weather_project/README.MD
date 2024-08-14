@@ -2,19 +2,13 @@
 
 ### Стек технологий:
 
-<img align="right" alt="PNG" height="200px" src="https://d1tlzifd8jdoy4.cloudfront.net/wp-content/uploads/2022/03/unnamed-2.jpg" />
-
  - ![alt text](https://img.shields.io/badge/Python-3.12-grey?style=plastic&logo=python&logoColor=white&labelColor=%233776AB)
 
  - ![alt text](https://img.shields.io/badge/Django-5.0.7-grey?style=plastic&logo=django&logoColor=white&labelColor=%23092E20)
 
  - ![alt text](https://img.shields.io/badge/PostgreSQL-16.3-grey?style=plastic&logo=postgresql&logoColor=white&labelColor=%234169E1)
 
- - ![alt text](https://img.shields.io/badge/Redis-5.0.3-grey?style=plastic&logo=redis&logoColor=white&labelColor=DC382D)
-
  - ![alt text](https://img.shields.io/badge/Docker-v25.0.3-grey?style=plastic&logo=docker&logoColor=white&labelColor=2496ED)
-
- - [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 ### Описание проекта
 Разработано Django-приложение, которое отображает прогноз погоды для заданного города.
@@ -50,21 +44,13 @@ DEBUG='True/False', например: True
 POSTGRES_DB_NAME='Название базы данных', например: 'name_of_db' или 'sdk_weather'
 POSTGRES_DB_USER='Пользователь базы данных', например: 'db_user' или 'postgres'
 POSTGRES_DB_PASSWORD='Пароль пользователя базы данных', например: 'your_password'
-POSTGRES_DB_HOST='Хост базы данных', например: '127.0.0.1' или 'localhost' или 'db' для Docker
+POSTGRES_DB_HOST='Хост базы данных', например: '127.0.0.1' или 'localhost' или 'database' для Docker
 POSTGRES_DB_PORT='Порт базы данных', например: '5432'
-
-REDIS_HOST='Хост базы данных', например: 'redis'
-REDIS_PORT='Порт базы данных', например: '6379'
-REDIS_DB='Номер базы данных', например: '0' или '1'
 
 # Superuser
 ADMIN_USERNAME=admin
 ADMIN_EMAIL=admin@example.com
 ADMIN_PASSWORD=admin
-
-# Open weather map api keys
-WEATHER_API_KEY_1=your_api_key_1
-
 
 ```
 </details>

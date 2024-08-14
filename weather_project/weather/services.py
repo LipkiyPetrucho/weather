@@ -19,23 +19,22 @@ def get_weather_data(city):
     geocode_url = (
         f"{settings.OPEN_METEO_BASE_URL}?name={city}&count=1&language={language}"
     )
-
     try:
         geocode_response = cache_session.get(geocode_url)
         geocode_response.raise_for_status()
     except requests.RequestException:
-        return None
+        return {"error": "Не удалось получить гео данные."}
 
     geocode_data = geocode_response.json()
-
     if "results" not in geocode_data or not geocode_data["results"]:
-        return None
+        return {"error": "Город не найден."}
 
-    latitude = geocode_data["results"][0]["latitude"]
-    longitude = geocode_data["results"][0]["longitude"]
-    population = "{:,}".format(geocode_data["results"][0]["population"])
-    country_code = geocode_data["results"][0]["country_code"]
-    country = geocode_data["results"][0]["country"]
+    result = geocode_data["results"][0]
+    latitude = result.get("latitude")
+    longitude = result.get("longitude")
+    population = "{:,}".format(result.get("population", 0))
+    country_code = result.get("country_code")
+    country = result.get("country")
 
     params = {
         "latitude": latitude,
@@ -53,17 +52,15 @@ def get_weather_data(city):
         response = cache_session.get(settings.OPEN_METEO_FORECAST_URL, params=params)
         response.raise_for_status()
     except requests.RequestException:
-        return None
+        return {"error": "Не удалось получить данные о погоде."}
 
     weather_data = response.json()
-
     current_weather = weather_data["current"]
     temperature = current_weather["temperature_2m"]
     wind_speed = current_weather["wind_speed_10m"]
     weather_code = current_weather["weather_code"]
     apparent_temperature = current_weather["apparent_temperature"]
     wind_gusts_10m = current_weather["wind_gusts_10m"]
-
     weather_description, weather_icon = get_weather_description_and_icon(weather_code)
 
     return {

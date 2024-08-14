@@ -7,6 +7,7 @@ from weather.forms import CityForm
 from weather.models import CitySearchHistory
 from weather.services import get_weather_data
 
+
 @login_required
 @csrf_exempt
 def weather_view(request):
@@ -16,23 +17,22 @@ def weather_view(request):
         city = form.cleaned_data["city"]
         request.session["last_city"] = city
         weather_data = get_weather_data(city)
-        if weather_data is not None:
-            CitySearchHistory.objects.create(
-                user=request.user,
-                city=city,
-                temperature=weather_data["current_temperature"],
-                search_date=timezone.now(),
-            )
-        else:
-            error_message = "Не удалось найти данные о погоде для введенного города. Проверьте правильность написания."
+        if "error" in weather_data:
+            error_message = weather_data["error"]
             return render(request, "error.html", {"message": error_message})
+        CitySearchHistory.objects.create(
+            user=request.user,
+            city=city,
+            temperature=weather_data["current_temperature"],
+            search_date=timezone.now(),
+        )
     else:
         city = request.GET.get("city", "Paris")
         weather_data = get_weather_data(city)
 
-    if weather_data is None:
-        error_message = "Данные о погоде не найдены для данного города."
-        return render(request, "error.html", {"message": error_message})
+        if "error" in weather_data:
+            error_message = weather_data["error"]
+            return render(request, "error.html", {"message": error_message})
 
     form = CityForm()
 
