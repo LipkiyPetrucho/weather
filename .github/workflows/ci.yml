@@ -48,6 +48,7 @@ jobs:
       - name: Build and run Docker containers
         run: |
           docker-compose up -d --build
+        working-directory: weather_project
         env:
           POSTGRES_DB: db_weather
           POSTGRES_USER: db_user
