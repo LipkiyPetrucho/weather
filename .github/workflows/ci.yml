@@ -34,7 +34,7 @@ jobs:
         run: |
           pip install --no-cache-dir poetry
           poetry config virtualenvs.create false
-          poetry install --no-interaction
+          poetry install --no-interaction --no-root
         working-directory: weather_project
 
       - name: Install Docker Compose
@@ -52,7 +52,7 @@ jobs:
         env:
           POSTGRES_DB: db_weather
           POSTGRES_USER: db_user
-          POSTGRES_DB_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           DEBUG: true
           ALLOWED_HOSTS: localhost,0.0.0.0,127.0.0.1
