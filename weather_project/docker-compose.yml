@@ -11,6 +11,8 @@ services:
     restart: always
     ports:
       - "8080:80"
+    networks:
+      - weather_project
 
   web:
     build:
@@ -23,8 +25,7 @@ services:
       - "./gunicorn.conf.py:/gunicorn.conf.py"
       - "./init.sh:/init.sh"
       - "static-volume:/static"
-    command:
-      /init.sh
+    command: sh -c "chmod +x /init.sh && /init.sh"
 #      python3 manage.py csu &&
 #      python3 manage.py runserver 0.0.0.0:8000"
     depends_on:
@@ -33,6 +34,8 @@ services:
       - DEBUG=${DEBUG}
       - SECRET_KEY=${SECRET_KEY}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+    networks:
+      - weather_project
 
   gunicorn:
     build:
@@ -47,6 +50,8 @@ services:
     restart: always
     environment:
       - PYTHONUNBUFFERED=${PYTHONUNBUFFERED}
+    networks:
+      - weather_project
 
   database:
     image: postgres:16.3-alpine
@@ -60,7 +65,12 @@ services:
       - pg_data:/var/lib/postgresql/data/pgdata
     ports:
       - "${POSTGRES_DB_PORT:-5432}:5432"
+    networks:
+      - weather_project
 
 volumes:
   static-volume:
   pg_data:
+
+networks:
+  weather_project:
