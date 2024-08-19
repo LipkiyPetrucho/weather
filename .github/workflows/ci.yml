@@ -63,11 +63,6 @@ jobs:
               echo "Waiting for PostgreSQL..."
               sleep 5
             fi
-          done
-
-      - name: Check logs for web container
-        run: |
-          docker-compose logs web
 
       - name: Run database migrations
         run: |
