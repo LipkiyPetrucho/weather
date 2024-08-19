@@ -55,11 +55,15 @@ jobs:
       - name: Wait for PostgreSQL to be ready
         run: |
           echo "Checking if PostgreSQL is ready..."
-          until docker-compose exec database pg_isready; do
-            echo "Waiting for PostgreSQL..."
-            sleep 5
+          for i in {1..30}; do
+            if docker-compose exec database pg_isready; then
+              echo "PostgreSQL is ready!"
+              break
+            else
+              echo "Waiting for PostgreSQL..."
+              sleep 5
+            fi
           done
-          echo "PostgreSQL is ready!"
 
       - name: Check logs for web container
         run: |
