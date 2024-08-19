@@ -14,7 +14,7 @@ jobs:
           POSTGRES_USER: db_user
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         ports:
-          - ${{ secrets.POSTGRES_DB_PORT }} #ошибка
+          - 5433:5433
 
     steps:
       - name: Checkout code
