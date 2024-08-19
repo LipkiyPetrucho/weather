@@ -31,8 +31,11 @@
   - Создать виртуальное окружение
   - Установить зависимости командой:
     ```python
-    pip install -r requirements.txt
+    pip install poetry
+    poetry config virtualenvs.create false \
+    && poetry install --no-interaction --no-root 
     ```
+    
 <details>
 <summary>Прописать переменные окружения в файле `.env.sample`. Необходимо переименовать `.env.sample` в `.env`! </summary>
    
@@ -86,7 +89,7 @@ create database weather;
 
 - Клонировать проект на собственный диск в новом каталоге
 -  <details>
-   <summary>Прописать переменные окружения в файле `.env.sample`. Имя файла необходимо заменить на .env</summary>
+   <summary>Прописать переменные окружения в файле `.env.sample`. Имя файла необходимо заменить на .env!</summary>
    
     ```dotenv
     SECRET_KEY='Секретный ключ Django'
