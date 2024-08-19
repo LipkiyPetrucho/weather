@@ -52,18 +52,6 @@ jobs:
           DEBUG: true
           ALLOWED_HOSTS: localhost,0.0.0.0,127.0.0.1
 
-      - name: Wait for PostgreSQL to be ready
-        run: |
-          echo "Checking if PostgreSQL is ready..."
-          for i in {1..30}; do
-            if docker-compose exec database pg_isready; then
-              echo "PostgreSQL is ready!"
-              break
-            else
-              echo "Waiting for PostgreSQL..."
-              sleep 5
-            fi
-
       - name: Run database migrations
         run: |
           docker-compose exec web python manage.py migrate --verbosity 3
