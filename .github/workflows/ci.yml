@@ -54,7 +54,7 @@ jobs:
 
       - name: Run database migrations
         run: |
-          docker-compose exec web python manage.py migrate
+          docker-compose exec web python manage.py migrate --verbosity 3
 
       - name: Run linters
         run: |
