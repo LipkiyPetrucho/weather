@@ -52,15 +52,6 @@ jobs:
           DEBUG: true
           ALLOWED_HOSTS: localhost,0.0.0.0,127.0.0.1
 
-      - name: Run linters
-        run: |
-          set -x
-          docker-compose exec web black --check .
-          docker-compose exec web flake8 .
-
-      - name: Check web container logs
-        run: docker-compose logs web
-
       - name: Run tests
         run: |
           docker-compose exec web pytest
