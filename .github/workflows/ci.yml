@@ -52,10 +52,6 @@ jobs:
           DEBUG: true
           ALLOWED_HOSTS: localhost,0.0.0.0,127.0.0.1
 
-      - name: Run database migrations
-        run: |
-          docker-compose exec web python manage.py migrate --verbosity 3
-
       - name: Run linters
         run: |
           docker-compose exec web black --check .
