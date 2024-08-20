@@ -13,7 +13,7 @@
 ### Описание проекта
 Разработано Django-приложение, которое отображает прогноз погоды для заданного города.
 
-При запросе города http://localhost:8000/weather/
+При запросе города http://localhost:8000/weather/ либо http://127.0.0.1:8000/weather/
 ```json
 {
     "city": "Paris"
@@ -125,11 +125,24 @@ create database weather;
 <summary>Посмотреть покрытие тестами можно:</summary>
 
 ```python
-coverage run --source='.' manage.py test
+poetry run pytest
 ```
 ```python
-coverage report
+docker-compose run --rm <имя_сервиса> pytest
+например: 
+docker-compose run --rm web pytest
 ```
+Кроме того, этот проект настроен для автоматического запуска тестов с помощью GitHub Actions.
+Чтобы тесты работали в GitHub Actions, вам нужно настроить секретные переменные
+аналогично тем, что есть в локальном файле .env.
+1. Перейдите в ваш репозиторий на GitHub.
+2. Нажмите на "Settings".
+3. Выберите "Secrets and variables" в меню слева.
+4. Нажмите на "Actions" и добавьте каждый секрет из вашего .env файла
+как новый секрет. Например, SECRET_KEY и POSTGRES_PASSWORD.
+
+После выполнения команды push, тесты будут автоматически запущены на GitHub.
+Вы можете просмотреть результаты в разделе "Actions" вашего репозитория на GitHub.
 </details>
 
 ***
