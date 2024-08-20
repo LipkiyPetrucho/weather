@@ -65,17 +65,33 @@ create database weather;
 
 - Применить миграции командой:
     ```python
-    python manage.py migrate
+    poetry run python manage.py migrate
     ```
+
+<details>
+<summary>Для запуска сервера через терминал:</summary>
+
+- Запустить сервер
+    ```python
+    poetry run python manage.py runserver
+    ```
+</details>
 
 <details>
 <summary>Для создания тестового пользователя - администратор:</summary>
 
-- login: admin@example.com
-- password: admin 
+
+- Cоздать суперпользователя
     ```python
-    python manage.py csu
+    python manage.py createsuperuser
     ```
+- ввести логин, например admin
+- почту(опционально)
+- ввести пароль, например admin
+
+ зайти на http://127.0.0.1:8000/admin/ либо http://localhost:8000/admin/
+- login: admin
+- password: admin
 </details>
 
 </details>
@@ -110,6 +126,25 @@ create database weather;
     docker-compose up --build
     ```
     > Происходит сборка образа контейнера согласно инструкции в файле Dockerfile и последовательный запуск всех контейнеров согласно инструкции в файле docker-compose.yaml
+
+<details>
+<summary>Для создания тестового пользователя - администратор:</summary>
+
+
+- Cоздать суперпользователя
+    ```python
+    docker-compose run --rm <имя_сервиса> "python manage.py createsuperuser"
+  например
+  docker-compose run --rm web "python manage.py createsuperuser"
+    ```
+- ввести логин, например admin
+- почту(опционально)
+- ввести пароль, например admin
+
+ зайти на http://127.0.0.1:8000/admin/ либо http://localhost:8000/admin/
+- login: admin
+- password: admin
+</details>
 
 </details>
 
