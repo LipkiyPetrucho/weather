@@ -54,8 +54,12 @@ jobs:
 
       - name: Run linters
         run: |
+          set -x
           docker-compose exec web black --check .
           docker-compose exec web flake8 .
+
+      - name: Check web container logs
+        run: docker-compose logs web
 
       - name: Run tests
         run: |
