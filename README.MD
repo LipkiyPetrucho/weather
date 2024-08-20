@@ -32,8 +32,8 @@
   - Установить зависимости командой:
     ```python
     pip install poetry
-    poetry config virtualenvs.create false \
-    && poetry install --no-interaction --no-root 
+    poetry config
+    && poetry install
     ```
     
 <details>
@@ -58,7 +58,21 @@ POSTGRES_DB_PORT='Порт базы данных', например: '5432'
 
 ```python
 psql -U postgres
-create database weather;
+CREATE USER db_user WITH PASSWORD 'password';
+CREATE DATABASE db_weather;
+\q
+psql -h localhost -U db_user -d db_weather
+
+если возникают проблемы с правами и со схемой!
+CREATE SCHEMA new_schema AUTHORIZATION db_user;
+CREATE SCHEMA
+в settings.py:
+добавить в DATABASES
+"OPTIONS": {
+                    "options": "-c search_path=new_schema"
+                },
+GRANT ALL PRIVILEGES ON DATABASE db_weather TO db_user;
+GRANT ALL PRIVILEGES ON SCHEMA public TO db_user;
 \q
 ```
 </details>
@@ -67,15 +81,6 @@ create database weather;
     ```python
     poetry run python manage.py migrate
     ```
-
-<details>
-<summary>Для запуска сервера через терминал:</summary>
-
-- Запустить сервер
-    ```python
-    poetry run python manage.py runserver
-    ```
-</details>
 
 <details>
 <summary>Для создания тестового пользователя - администратор:</summary>
@@ -92,6 +97,15 @@ create database weather;
  зайти на http://127.0.0.1:8000/admin/ либо http://localhost:8000/admin/
 - login: admin
 - password: admin
+</details>
+
+<details>
+<summary>Для запуска сервера через терминал:</summary>
+
+- Запустить сервер
+    ```python
+    poetry run python manage.py runserver
+    ```
 </details>
 
 </details>
