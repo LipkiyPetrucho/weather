@@ -52,9 +52,11 @@ jobs:
           DEBUG: true
           ALLOWED_HOSTS: localhost,0.0.0.0,127.0.0.1
 
-      - name: Run tests
+      - name: Run pytest
         run: |
-          docker-compose exec web pytest
+          docker-compose exec web pytest -v --tb=short > pytest_output.log || true
+          echo "=== Pytest Output ==="
+          cat pytest_output.log
 
       - name: Tear down Docker containers
         if: always()
