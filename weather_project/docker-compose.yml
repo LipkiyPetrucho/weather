@@ -4,13 +4,13 @@ services:
   proxy:
     image: nginx:1.25
     volumes:
-      - "./nginx.conf:/etc/nginx/nginx.conf:ro"
+      - "./nginx.conf:/etc/nginx/nginx.conf"
       - "static-volume:/static"
     depends_on:
-      - gunicorn
+      - web
     restart: always
     ports:
-      - "8080:80"
+      - "80:80"
     networks:
       - weather_project
 
@@ -25,31 +25,13 @@ services:
       - "./gunicorn.conf.py:/gunicorn.conf.py"
       - "./init.sh:/init.sh"
       - "static-volume:/static"
-    command: sh -c "chmod +x /init.sh && /init.sh"
-#      python3 manage.py csu &&
-#      python3 manage.py runserver 0.0.0.0:8000"
+    command: bash init.sh
     depends_on:
       - database
     environment:
       - DEBUG=${DEBUG}
       - SECRET_KEY=${SECRET_KEY}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
-    networks:
-      - weather_project
-
-  gunicorn:
-    build:
-      context: .
-      dockerfile: Dockerfile.gunicorn
-    volumes:
-      - ".:/weather_project"
-      - "./gunicorn.conf.py:/gunicorn.conf.py"
-      - "static-volume:/static"
-    depends_on:
-      - web
-    restart: always
-    environment:
-      - PYTHONUNBUFFERED=${PYTHONUNBUFFERED}
     networks:
       - weather_project
 
