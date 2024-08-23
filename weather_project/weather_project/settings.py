@@ -13,7 +13,6 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
 INSTALLED_APPS = [
-    # my apps
     "weather.apps.WeatherConfig",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -21,7 +20,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # packages install
     "rest_framework",
 ]
 
@@ -55,9 +53,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "weather_project.wsgi.application"
 
-
-# Database
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -68,8 +63,6 @@ DATABASES = {
         "PORT": os.getenv("POSTGRES_DB_PORT"),
     }
 }
-
-# Password validation
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -86,8 +79,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
@@ -96,16 +87,11 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "weather", "static")
 
-# Default primary key field type
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# rest_framework
 REST_FRAMEWORK = {"DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"]}
 
 OPEN_METEO_BASE_URL = "https://geocoding-api.open-meteo.com/v1/search"

@@ -2,6 +2,7 @@ from django.db.models import Count
 from rest_framework import viewsets
 from rest_framework.response import Response
 
+from weather.api.permissions import DenyAllWritePermission
 from weather.api.serializers import (
     CitySearchHistorySerializer,
     CitySearchStatsSerializer,
@@ -12,6 +13,7 @@ from weather.models import CitySearchHistory
 class CitySearchHistoryViewSet(viewsets.ModelViewSet):
     queryset = CitySearchHistory.objects.all()
     serializer_class = CitySearchHistorySerializer
+    permission_classes = [DenyAllWritePermission]
 
 
 class CitySearchCountViewSet(viewsets.ViewSet):
