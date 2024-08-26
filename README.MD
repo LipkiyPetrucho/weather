@@ -30,7 +30,7 @@
 - Клонировать проект на собственный диск в новом каталоге
   - Создать виртуальное окружение
   - Установить зависимости командой:
-    ```python
+    ```bash
     pip install poetry
     poetry config
     && poetry install
@@ -56,7 +56,7 @@ POSTGRES_DB_PORT='Порт базы данных', например: '5432'
 <details>
 <summary>Создать базу данных (в данном проекте используется PostgreSQL)</summary>
 
-```python
+```bash
 psql -U postgres
 CREATE USER db_user WITH PASSWORD 'password';
 CREATE DATABASE db_weather;
@@ -78,7 +78,7 @@ GRANT ALL PRIVILEGES ON SCHEMA public TO db_user;
 </details>
 
 - Применить миграции командой:
-    ```python
+    ```bash
     poetry run python manage.py migrate
     ```
 
@@ -87,7 +87,7 @@ GRANT ALL PRIVILEGES ON SCHEMA public TO db_user;
 
 
 - Cоздать суперпользователя
-    ```python
+    ```bash
     python manage.py createsuperuser
     ```
 - ввести логин, например admin
@@ -103,7 +103,7 @@ GRANT ALL PRIVILEGES ON SCHEMA public TO db_user;
 <summary>Для запуска сервера через терминал:</summary>
 
 - Запустить сервер
-    ```python
+    ```bash
     poetry run python manage.py runserver
     ```
 </details>
@@ -124,19 +124,17 @@ GRANT ALL PRIVILEGES ON SCHEMA public TO db_user;
     ```dotenv
     SECRET_KEY='Секретный ключ Django'
     DEBUG='True/False', например: True
-    
-    # PostgreSQL
+   # PostgreSQL
     POSTGRES_DB_NAME='Название базы данных', например: 'name_of_db' или 'sdk_weather'
     POSTGRES_DB_USER='Пользователь базы данных', например: 'db_user' или 'postgres'
     POSTGRES_DB_PASSWORD='Пароль пользователя базы данных', например: 'your_password'
     POSTGRES_DB_HOST='Хост базы данных', например: '127.0.0.1' или 'localhost' или 'database' для Docker
     POSTGRES_DB_PORT='Порт базы данных', например: '5432'
-
     ```
    </details>
 
 - Ввести в терминале команду:
-    ```python
+    ```bash
     docker-compose up --build
     ```
     > Происходит сборка образа контейнера согласно инструкции в файле Dockerfile и последовательный запуск всех контейнеров согласно инструкции в файле docker-compose.yaml
@@ -146,7 +144,7 @@ GRANT ALL PRIVILEGES ON SCHEMA public TO db_user;
 
 
 - Cоздать суперпользователя
-    ```python
+    ```bash
     docker-compose run --rm <имя_сервиса> "python manage.py createsuperuser"
   например
   docker-compose run --rm web "python manage.py createsuperuser"
@@ -173,10 +171,10 @@ GRANT ALL PRIVILEGES ON SCHEMA public TO db_user;
 <details>
 <summary>Посмотреть покрытие тестами можно:</summary>
 
-```python
+```bash
 poetry run pytest
 ```
-```python
+```bash
 docker-compose run --rm <имя_сервиса> pytest
 например: 
 docker-compose run --rm web pytest
