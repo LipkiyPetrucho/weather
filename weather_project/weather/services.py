@@ -15,16 +15,12 @@ cache_session.mount("https://", HTTPAdapter(max_retries=retries))
 
 
 def get_geocode_data(city):
+    """Получает географические данные для указанного города."""
     language = detect_language(city)
     geocode_url = (
         f"{settings.OPEN_METEO_BASE_URL}?name={city}&count=1&language={language}"
     )
-    try:
-        response = cache_session.get(geocode_url)
-        response.raise_for_status()
-    except requests.RequestException:
-        return {"error": "Не удалось получить гео данные."}
-    geocode_data = response.json()
+    geocode_data = fetch_data(geocode_url)
     results = geocode_data.get("results")
 
     if not results:
@@ -41,10 +37,10 @@ def get_geocode_data(city):
 
 
 def get_weather_data(city):
+    """Получает данные о погоде для указанного города."""
     geocode_result = get_geocode_data(city)
     if "error" in geocode_result:
         return geocode_result
-    language = detect_language(city)
 
     latitude = geocode_result["latitude"]
     longitude = geocode_result["longitude"]
@@ -64,14 +60,7 @@ def get_weather_data(city):
         ],
         "wind_speed_unit": "ms",
     }
-    try:
-        response = cache_session.get(settings.OPEN_METEO_FORECAST_URL, params=params)
-        response.raise_for_status()
-    except requests.RequestException:
-        return {"error": "Не удалось получить данные о погоде."}
-
-    weather_data = response.json()
-
+    weather_data = fetch_data(settings.OPEN_METEO_FORECAST_URL, params)
     current_weather = weather_data["current"]
     temperature = current_weather["temperature_2m"]
     wind_speed = current_weather["wind_speed_10m"]
@@ -140,3 +129,13 @@ def detect_language(city):
         return "ru"
     else:
         return "en"
+
+
+def fetch_data(url, params=None):
+    """Функция для получения данных с обработкой ошибок."""
+    try:
+        response = requests.get(url, params=params)
+        response.raise_for_status()
+        return response.json()
+    except requests.RequestException:
+        return {"error": "Не удалось получить данные."}
