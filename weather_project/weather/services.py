@@ -14,27 +14,43 @@ retries = Retry(
 cache_session.mount("https://", HTTPAdapter(max_retries=retries))
 
 
-def get_weather_data(city):
+def get_geocode_data(city):
     language = detect_language(city)
     geocode_url = (
         f"{settings.OPEN_METEO_BASE_URL}?name={city}&count=1&language={language}"
     )
     try:
-        geocode_response = cache_session.get(geocode_url)
-        geocode_response.raise_for_status()
+        response = cache_session.get(geocode_url)
+        response.raise_for_status()
     except requests.RequestException:
         return {"error": "Не удалось получить гео данные."}
+    geocode_data = response.json()
+    results = geocode_data.get("results")
 
-    geocode_data = geocode_response.json()
-    if "results" not in geocode_data or not geocode_data["results"]:
+    if not results:
         return {"error": "Город не найден."}
+    result = results[0]
 
-    result = geocode_data["results"][0]
-    latitude = result.get("latitude")
-    longitude = result.get("longitude")
-    population = "{:,}".format(result.get("population", 0))
-    country_code = result.get("country_code")
-    country = result.get("country")
+    return {
+        "latitude": result.get("latitude"),
+        "longitude": result.get("longitude"),
+        "population": "{:,}".format(result.get("population", 0)),
+        "country_code": result.get("country_code"),
+        "country": result.get("country"),
+    }
+
+
+def get_weather_data(city):
+    geocode_result = get_geocode_data(city)
+    if "error" in geocode_result:
+        return geocode_result
+    language = detect_language(city)
+
+    latitude = geocode_result["latitude"]
+    longitude = geocode_result["longitude"]
+    population = geocode_result["population"]
+    country_code = geocode_result["country_code"]
+    country = geocode_result["country"]
 
     params = {
         "latitude": latitude,
@@ -55,6 +71,7 @@ def get_weather_data(city):
         return {"error": "Не удалось получить данные о погоде."}
 
     weather_data = response.json()
+
     current_weather = weather_data["current"]
     temperature = current_weather["temperature_2m"]
     wind_speed = current_weather["wind_speed_10m"]
